@@ -57,17 +57,15 @@ const getPhotoById = async (req,res) => {
 }
 const createCar = async (req, res) => {
     try {
-        const { name, description, shipping, brand } = req.body;
+        const { name, description, brand } = req.body;
         
-        // Check for required fields
         if (!name || !description || !brand) {
             return res.status(400).send({ message: "Name, description, and brand are required." });
         }
         
-        // Assuming your file paths are correct, no need for modification
         const productPictures = req.files.map(file => file.path);
 
-        const slug = slugify(name); // Make sure slugify function is defined
+        const slug = slugify(name);
 
         const car = new carModel({
             name: name,
@@ -112,8 +110,8 @@ const deleteCar = async (req,res) => {
 
 const updatecar = async (req,res) => {
     try{
-        const {name,description,shipping,brand} = req.fields
-        const {photo} = req.files
+        const {name,description,brand} = req.fields
+        // const {photo} = req.files
 
         switch(true){
             case !name : return res.status(500).send({message:"Name is required"})
@@ -123,10 +121,10 @@ const updatecar = async (req,res) => {
         }
 
         const car = await carModel.findByIdAndUpdate(req.params.pid,{...req.fields,slug:slugify(name)},{new:true})
-        if(photo){
-            car.photo.data = fs.readFileSync(photo.path)
-            car.photo.contentType = photo.type
-        }
+        // if(photo){
+        //     car.photo.data = fs.readFileSync(photo.path)
+        //     car.photo.contentType = photo.type
+        // }
         await car.save()
         res.status(201).send({
             success:true,

@@ -68,10 +68,9 @@ const Cars = () => {
                                                 src={`http://localhost:5000/${p.productPictures[index].replace(/^uploads\\/, '')}`}
                                                 height='180px' width='255px' alt={p.name}
                                             />
-                                            {console.log(p.productPictures[index].replace(/^uploads\\/, ''))}
                                         </Link>
                                         <button onClick={() => handleDelete(p._id)} className='btn btn-danger mt-2'>Delete</button>
-                                        <button className='btn btn-primary mt-2 mx-2'>Edit</button>
+                                        <Link to={`/dashboard/admin/car/${p.slug}`} className='btn btn-primary mt-2 mx-2'>Edit</Link>
                                     </div>
                                 </div>
                             ))}

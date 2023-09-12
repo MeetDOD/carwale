@@ -25,7 +25,7 @@ const UpdateCar = () => {
         try {
             const { data } = await axios.get(`http://localhost:5000/api/car/getCarById-car/${params.slug}`)
             setname(data.car.name)
-            setBrand(data.car.brand._id)
+            setBrand(data.car.brand)
             setdescription(data.car.description)
             setId(data.car._id)
             setshipping(data.car.shipping)
@@ -34,7 +34,7 @@ const UpdateCar = () => {
         }
     }
 
-    const getAllCar = async () => {
+    const getAllCarBrand = async () => {
         try {
             const data = await fetch("http://localhost:5000/api/brand/getAll-brand", {
                 method: "GET",
@@ -42,6 +42,7 @@ const UpdateCar = () => {
             })
             const data_ = await data.json()
             setBrands(data_.brand)
+            console.log(data_)
         } catch (error) {
             console.log(error);
         }
@@ -83,7 +84,7 @@ const UpdateCar = () => {
     }
 
     useEffect(() => {
-        getAllCar();
+        getAllCarBrand();
         getSingleProduct();
     }, [])
 
@@ -97,15 +98,15 @@ const UpdateCar = () => {
                     <div className='col-md-9 mt-2'>
                         <h1>Update Car</h1>
                         <div className='m-1'>
-                            <Select bordered={false} placeholder='Select A Brand' size='large' showSearch className='form-select mb-3' onChange={(e) => { setBrand(e.target.value) }} value={brand}>
+                            <Select bordered={false} placeholder='Select A Brand' size='large' showSearch className='form-select mb-3' onChange={(e) => { setBrand(e.target.value) }} value={brand.name}>
                                 {brands?.map(c => (
-                                    <Option key={c._id} value={c._id}>
+                                    <Option key={c._id}>
                                         {c.name}
                                     </Option>
                                 ))}
                             </Select>
 
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label className="btn btn-outline-secondary col-md-12">
                                     {photo ? photo.name : "Upload Photo"}
                                     <input
@@ -116,8 +117,8 @@ const UpdateCar = () => {
                                         hidden
                                     />
                                 </label>
-                            </div>
-                            <div className="mb-3">
+                            </div> */}
+                            {/* <div className="mb-3">
                                 {photo ? (
                                     <div className="text-center">
                                         <img
@@ -130,26 +131,26 @@ const UpdateCar = () => {
                                 ) : (
                                     <div className="text-center">
                                         <img
-                                            src={`http://localhost:5000/api/car/getPhoto-car/${id}`}
+                                            src={`http://localhost:5000/${photo.productPictures?.replace(/^uploads\\/, '')}`}
                                             alt="product_photo"
                                             height={"200px"}
                                             className="img img-responsive"
                                         />
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
                             <div className='mb-3'>
                                 <input type='text' value={name} placeholder='write a car name' className='form-control' onChange={(e) => setname(e.target.value)} />
                             </div>
                             <div className='mb-3'>
                                 <textarea rows={3} type='text' value={description} placeholder='write a car description' className='form-control' onChange={(e) => setdescription(e.target.value)} />
                             </div>
-                            <div className='mb-3'>
+                            {/* <div className='mb-3'>
                                 <Select bordered={false} placeholder='Select Shipping' size='large' showSearch className='form-select mb-3' onChange={(value) => { setshipping(value) }} value={shipping ? "yes" : "no"}>
                                     <Option value='0'>No</Option>
                                     <Option value='1'>Yes</Option>
                                 </Select>
-                            </div>
+                            </div> */}
                             <div className='mb-3'>
                                 <button className='btn btn-success mx-2' onClick={handleSubmit}>Update Car</button>
                                 <button className='btn btn-danger' onClick={handleDelete}>Delete Car</button>
