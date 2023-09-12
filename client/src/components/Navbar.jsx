@@ -1,10 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import "./Navbar.css"
+import React, { useState } from 'react'
+import { Link } from "react-router-dom"
+import { FaBars, FaTimes } from "react-icons/fa"
 import { useAuth } from '../context/auth'
 
-const Navbar = () => {
+function Navbar() {
 
     const [auth, setAuth] = useAuth();
+    const [click, setClick] = useState(false)
+    const handleClick = () => setClick(!click)
+
+    const [color, setColor] = useState(false);
+    const changeColor = () => {
+        if (window.scrollY >= 100) {
+            setColor(true);
+        } else {
+            setColor(false);
+        }
+    };
 
     const handleSubmit = () => {
         setAuth({
@@ -15,48 +28,43 @@ const Navbar = () => {
         localStorage.removeItem('auth')
     }
 
+    window.addEventListener("scroll", changeColor);
+
     return (
-        <div>
-            <nav class="navbar navbar-expand-lg container">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <Link class="nav-link" to="/">Home</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link" to="/category">Category</Link>
-                            </li>
-                            {!auth.user ? (<>
-                                <li class="nav-item">
-                                    <Link class="nav-link" to='/login'>Login</Link>
-                                </li>
-                                <li class="nav-item">
-                                    <Link class="nav-link" to='/register'>Register</Link>
-                                </li>
-                            </>) : (<>
-                                <li class="nav-item">
-                                    <Link class="nav-link" onClick={handleSubmit} to='/login'>Logout</Link>
-                                </li>
-                                <li class="nav-item">
-                                    <Link class="nav-link" to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}>Dashboard</Link>
-                                </li>
-                            </>)
-                            }
-                            <li class="nav-item">
-                                <Link to='/cart' class="nav-link" >Cart</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link" to='/admin'>Admin</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <div className={color ? "header header-bg" : "header"}>
+            <Link to="/" className="logo">
+                <h1>Meet</h1>
+            </Link>
+            <ul className={click ? "nav-menu active" : "nav-menu"} style={{ marginRight: '100px' }}>
+                <li>
+                    <Link class="nav-link no" to="/">  Home </Link>
+                </li>
+                <li>
+                    <Link class="nav-link no" to="/brands"> Brands </Link>
+                </li>
+                <li>
+                    <Link class="nav-link no" to="/about"> Cart </Link>
+                </li>
+                {!auth.user ? (<>
+                    <li class="nav-item">
+                        <Link class="nav-link no" to='/login'>Login</Link>
+                    </li>
+                    <li class="nav-item">
+                        <Link class="nav-link no" to='/register'>Register</Link>
+                    </li>
+                </>) : (<>
+                    <li class="nav-item">
+                        <Link class="nav-link no" onClick={handleSubmit} to='/login'>Logout</Link>
+                    </li>
+                    <li class="nav-item">
+                        <Link class="nav-link no" to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}>Dashboard</Link>
+                    </li>
+                </>)
+                }
+            </ul>
+            <div className="ham" onClick={handleClick}>
+                {click ? (<FaTimes size={25} style={{ color: "white" }} />) : (<FaBars size={25} style={{ color: "white" }} />)}
+            </div>
         </div>
     )
 }

@@ -1,0 +1,8 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+ul {
+  list-style: none;
+  color: aliceblue;
+}

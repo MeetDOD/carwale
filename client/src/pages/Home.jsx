@@ -1,12 +1,11 @@
 import React from 'react'
-import { useAuth } from '../context/auth'
+import Hero from '../smallcomponents/Hero'
 
 const Home = () => {
-    const [auth, setAuth] = useAuth()
 
     return (
         <div>
-            <pre>{JSON.stringify(auth, null, 4)}</pre>
+            <Hero />
         </div>
     )
 }

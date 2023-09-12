@@ -15,6 +15,7 @@ import UserProfile from './user/UserProfile';
 import CreateCar from './admin/CreateCar';
 import UpdateCar from './admin/UpdateCar';
 import Cars from './admin/Cars';
+import './main.css'
 
 function App() {
   return (
