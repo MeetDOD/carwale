@@ -63,7 +63,7 @@ const createCar = async (req, res) => {
             return res.status(400).send({ message: "Name, description, and brand are required." });
         }
         
-        const productPictures = req.files.map(file => file.path);
+        const productPictures = req.files.map(file => file.path.replace('uploads\\', ''));
 
         const slug = slugify(name);
 

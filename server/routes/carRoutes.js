@@ -9,7 +9,7 @@ const router = express.Router()
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/')
+      cb(null, './uploads')
     },
     filename: function (req, file, cb) {
       let ex = path.extname(file.originalname)
@@ -23,7 +23,7 @@ router.get('/getAll-car',getAllCar);
 router.get('/getCarById-car/:slug',getCarById);
 router.get('/getPhoto-car/:pid',getPhotoById);
 
-router.post('/create-car',requireLogin,isAdmin,upload.array('productPictures'),createCar);
+router.post('/create-car',requireLogin,isAdmin,upload.array('productPictures',4),createCar);
 
 router.put('/update-car/:pid',requireLogin,isAdmin,formidable(),updatecar);
 router.delete('/delete-car/:pid',requireLogin,isAdmin,deleteCar);
