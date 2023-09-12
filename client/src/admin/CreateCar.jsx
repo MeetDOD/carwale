@@ -42,8 +42,9 @@ const CreateCar = () => {
 
             // Append each selected image to the FormData
             productPictures.forEach((image, index) => {
-                carData.append(`productPictures[${index}]`, image);
+                carData.append(`productPictures`, image);
             });
+            console.log(productPictures)
 
             const { data } = await axios.post('http://localhost:5000/api/car/create-car', carData);
 
@@ -70,6 +71,7 @@ const CreateCar = () => {
                         <AdminMenu />
                     </div>
                     <div className='col-md-9 mt-2'>
+                        <form method='post' enctype="multipart/form-data"> 
                         <h1>Create Car</h1>
                         <div className='m-1'>
                             <Select
@@ -151,6 +153,7 @@ const CreateCar = () => {
                                 </button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

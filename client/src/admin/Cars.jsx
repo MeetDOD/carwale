@@ -65,7 +65,7 @@ const Cars = () => {
                                         <Link to={`/dashboard/admin/car/${p.slug}`} key={p._id} >
 
                                             <img
-                                                src={`http://localhost:5000/${p.productPictures[index].replace(/^uploads\\/, '')}`}
+                                                src={`http://localhost:5000/${p.productPictures[index]}`}
                                                 height='180px' width='255px' alt={p.name}
                                             />
                                         </Link>
