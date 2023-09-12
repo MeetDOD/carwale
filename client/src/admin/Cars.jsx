@@ -63,11 +63,12 @@ const Cars = () => {
                                         <h5 class="card-title">{p.name}</h5>
                                         <p className="card-text">{truncateText(p.description, 4)}</p>
                                         <Link to={`/dashboard/admin/car/${p.slug}`} key={p._id} >
+
                                             <img
-                                                src={`http://localhost:5000/${p.productPictures[index]}`}
+                                                src={`http://localhost:5000/${p.productPictures[index].replace(/^uploads\\/, '')}`}
                                                 height='180px' width='255px' alt={p.name}
                                             />
-                                            {/* {console.log(p.productPictures[index].img)} */}
+                                            {console.log(p.productPictures[index].replace(/^uploads\\/, ''))}
                                         </Link>
                                         <button onClick={() => handleDelete(p._id)} className='btn btn-danger mt-2'>Delete</button>
                                         <button className='btn btn-primary mt-2 mx-2'>Edit</button>

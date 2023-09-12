@@ -4,7 +4,8 @@
   "description": "Backend for Car Buying Website M.E.R.N Stack",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "author": "Meet Dodiya",
   "license": "ISC",

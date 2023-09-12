@@ -55,52 +55,44 @@ const getPhotoById = async (req,res) => {
         })
     }
 }
-
-const createCar = async (req,res) => {
-    try{
-        const {name,description,shipping,brand} = req.body
-        let productPictures = []
-        let pimg = []
-        if(req.files.length > 0){
-            productPictures = req.files.map(file => {
-                let path = file.path.slice(0,8)+file.path.slice(10,file.path.length)
-                console.log(path)
-                pimg.push(path)
-                return path
-            })
+const createCar = async (req, res) => {
+    try {
+        const { name, description, shipping, brand } = req.body;
+        
+        // Check for required fields
+        if (!name || !description || !brand) {
+            return res.status(400).send({ message: "Name, description, and brand are required." });
         }
+        
+        // Assuming your file paths are correct, no need for modification
+        const productPictures = req.files.map(file => file.path);
 
-        console.log(pimg)
-
-        switch(true){
-            case !name : return res.status(500).send({message:"Name is required"})
-            case !description : return res.status(500).send({message:"Description is required"})
-            case !brand : return res.status(500).send({message:"Brand is required"})
-        }
+        const slug = slugify(name); // Make sure slugify function is defined
 
         const car = new carModel({
-            name:name,
-            slug:slugify(name),
-            description:description,
-            brand:brand,
-            productPictures:pimg
-        })
+            name: name,
+            slug: slug,
+            description: description,
+            brand: brand,
+            productPictures: productPictures
+        });
 
-        await car.save()
+        await car.save();
+
         res.status(201).send({
-            success:true,
-            message:'Car Created Successfully',
+            success: true,
+            message: 'Car Created Successfully',
             car
-        })
-    }catch(err){
-        console.log(err)
+        });
+    } catch (err) {
+        console.error(err);
         res.status(500).send({
-            success:false,
-            message:"Error in creating Car",
-            err
-        })
+            success: false,
+            message: "Error in creating Car",
+            error: err.message // Provide a more detailed error message
+        });
     }
-}
+};
 
 const deleteCar = async (req,res) => {
     try{
