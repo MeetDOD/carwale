@@ -28,62 +28,10 @@ video {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  /* background-color: #000000cc; */
 }
 
-.text-animation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #101010;
-}
-
-.text-wrapper h5 {
-  color: #101010;
-  font-size: 8vw;
-  white-space: nowrap;
-  position: absolute;
-  transform: translate(-50%, -62%);
-}
-
-.text-wrapper h5:nth-child(1) {
-  color: transparent;
-  -webkit-text-stroke: 2px #101010;
-}
-
-.text-wrapper h5:nth-child(2) {
-  color: #101010;
-  animation: wave 4s ease-in-out infinite;
-}
-
-@keyframes wave {
-  /* start point */
-  0%,
-  100% {
-    clip-path: polygon(
-      0% 46%,
-      17% 45%,
-      34% 50%,
-      56% 61%,
-      69% 62%,
-      86% 60%,
-      100% 51%,
-      100% 100%,
-      0% 100%
-    );
-  }
-  /* Mid point */
-  50% {
-    clip-path: polygon(
-      0% 59%,
-      16% 64%,
-      33% 65%,
-      52% 61%,
-      70% 52%,
-      85% 47%,
-      100% 48%,
-      100% 100%,
-      0% 100%
-    );
-  }
+h1,
+h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
 }

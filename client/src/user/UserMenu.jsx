@@ -8,7 +8,6 @@ const UserMenu = () => {
                 <div className='list-group list-group-flush'>
                     <Link to='/dashboard/user/order' className='list-group-item list-group-item-action'> Order</Link>
                     <Link to='/dashboard/user/profile' className='list-group-item list-group-item-action'> Profile  </Link>
-                    <Link to='/dashboard/user/user' className='list-group-item list-group-item-action'> User </Link>
                 </div>
             </div>
         </div>

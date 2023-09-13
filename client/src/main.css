@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Kanit:wght@300&family=Mea+Culpa&family=Poppins:wght@100&family=Tektur&display=swap");
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -16,6 +18,7 @@ ul {
   font-weight: 400;
   color: #101010;
   margin: auto;
+  font-family: "Inter";
 }
 
 .heading::before,
@@ -27,3 +30,24 @@ ul {
 }
 
 /* Heading Ends */
+
+.btn {
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  padding: 10px 24px;
+  font-family: "Inter", sans-serif;
+}
+
+.btn-brand {
+  border-color: #101010;
+  color: #101010;
+}
+
+.btn-brand:hover {
+  background-color: #630043;
+  border-color: white;
+  color: white;
+  transition: 0.3s;
+}

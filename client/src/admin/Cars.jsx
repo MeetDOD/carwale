@@ -15,9 +15,12 @@ const Cars = () => {
             })
             const data_ = await data.json()
             setcars(data_.car)
-            console.log(data_)
+            console.log(data_.car)
+
         } catch (error) {
             console.log(error);
+        } finally {
+
         }
     };
 
@@ -48,7 +51,12 @@ const Cars = () => {
     }, []);
 
     return (
-        <div className='container m-5 p-5'>
+        <div className='container'>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <div className='container-fluid'>
                 <div className='row'>
                     <div className='col-md-3'>
@@ -63,9 +71,8 @@ const Cars = () => {
                                         <h5 class="card-title">{p.name}</h5>
                                         <p className="card-text">{truncateText(p.description, 4)}</p>
                                         <Link to={`/dashboard/admin/car/${p.slug}`} key={p._id} >
-
                                             <img
-                                                src={`http://localhost:5000/${p.productPictures[index]}`}
+                                                src={`http://localhost:5000/${p.productPictures[0]}`}
                                                 height='180px' width='255px' alt={p.name}
                                             />
                                         </Link>

@@ -16,6 +16,8 @@ import CreateCar from './admin/CreateCar';
 import UpdateCar from './admin/UpdateCar';
 import Cars from './admin/Cars';
 import './main.css'
+import CarView from './smallcomponents/CarView';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>} />
+          <Route path='/cart' element={<Cart/>} />
+          <Route path='/car/:slug' element={<CarView/>} />
           <Route path='/dashboard' element={<PrivateRoute/>}>
             <Route path='user' element={<UserDashboard/>} />
             <Route path='user/order' element={<UserOrder/>} />

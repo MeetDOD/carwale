@@ -8,16 +8,14 @@ const Hero = () => {
             <div className="overlay"></div>
             <video src={bugati} autoPlay loop muted />
             <div className="content">
-                <div class="text-center my-5">
-                    <div class="text-animation">
-                        <div class="text-wrapper">
-                            <h5>Velocity Vehicals</h5>
-                            <h5>Velocity Vehicals</h5>
-                        </div>
-                    </div>
-                </div>
+                <h1 class="text-warning text-center" style={{ fontWeight: 'bold', fontSize: '3rem' }}>
+                    Where Car Dreams Become Reality
+                </h1>
+                <h2 class="text-center" style={{ fontWeight: 'bold' }}>
+                    Endless <span className='text-warning'>Possibilities</span>, Limitless <span className='text-warning'>Satisfaction</span>
+                </h2>
             </div>
-        </div>
+        </div >
     )
 }
 

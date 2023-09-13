@@ -6,7 +6,12 @@ const AdminDashboard = () => {
     const [auth] = useAuth()
 
     return (
-        <div className='container m-5 p-5'>
+        <div className='container'>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <div className='container-fluid'>
                 <div className='row'>
                     <div className='col-md-3'>
