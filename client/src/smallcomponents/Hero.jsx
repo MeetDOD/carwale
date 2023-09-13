@@ -8,8 +8,14 @@ const Hero = () => {
             <div className="overlay"></div>
             <video src={bugati} autoPlay loop muted />
             <div className="content">
-                <h1>Welcome</h1>
-                <p>To my site.</p>
+                <div class="text-center my-5">
+                    <div class="text-animation">
+                        <div class="text-wrapper">
+                            <h5>Velocity Vehicals</h5>
+                            <h5>Velocity Vehicals</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

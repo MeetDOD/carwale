@@ -6,3 +6,24 @@ ul {
   list-style: none;
   color: aliceblue;
 }
+
+/* Heading starts */
+.heading {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  max-width: 25rem;
+  font-weight: 400;
+  color: #101010;
+  margin: auto;
+}
+
+.heading::before,
+.heading::after {
+  flex: 1;
+  content: "";
+  height: 0.5rem;
+  border-block: 0.15rem solid #101010;
+}
+
+/* Heading Ends */

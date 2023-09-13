@@ -45,6 +45,9 @@ function Navbar() {
                 <li>
                     <Link class="nav-link no" to="/about"> Cart </Link>
                 </li>
+                <li class="nav-item">
+                    <Link class="nav-link no" to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}>Dashboard</Link>
+                </li>
                 {!auth.user ? (<>
                     <li class="nav-item">
                         <Link class="nav-link no" to='/login'>Login</Link>
@@ -55,9 +58,6 @@ function Navbar() {
                 </>) : (<>
                     <li class="nav-item">
                         <Link class="nav-link no" onClick={handleSubmit} to='/login'>Logout</Link>
-                    </li>
-                    <li class="nav-item">
-                        <Link class="nav-link no" to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}>Dashboard</Link>
                     </li>
                 </>)
                 }
