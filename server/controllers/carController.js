@@ -4,6 +4,7 @@ const orderModel = require("../models/orderModel")
 const fs = require('fs')
 const braintree = require("braintree");
 const dotenv = require('dotenv')
+const path = require('path')
 
 dotenv.config()
 
@@ -70,12 +71,23 @@ const getPhotoById = async (req,res) => {
 }
 const createCar = async (req, res) => {
     try {
-        const { name, description, brand } = req.body;
+        const { name, description, brand,price,fuelType,transmission,engineSize,mileage,safetyrating,warranty,seater,size,fuelTank } = req.body;
         
-        if (!name || !description || !brand) {
-            return res.status(400).send({ message: "Name, description, and brand are required." });
+        switch(true){
+            case !name: res.status(500).send({success: false,message: "Name is Required",});
+            case !description: res.status(500).send({success: false,message: "description is Required",});
+            case !brand: res.status(500).send({success: false,message: "brand is Required",});
+            case !price: res.status(500).send({success: false,message: "price is Required",});
+            case !fuelType: res.status(500).send({success: false,message: "fuelType is Required",});
+            case !transmission: res.status(500).send({success: false,message: "transmission is Required",});
+            case !engineSize: res.status(500).send({success: false,message: "engineSize is Required",});
+            case !mileage: res.status(500).send({success: false,message: "mileage is Required",});
+            case !safetyrating: res.status(500).send({success: false,message: "safetyrating is Required",});
+            case !warranty: res.status(500).send({success: false,message: "warranty is Required",});
+            case !seater: res.status(500).send({success: false,message: "seater is Required",});
+            case !size: res.status(500).send({success: false,message: "size is Required",});
+            case !fuelTank: res.status(500).send({success: false,message: "fuelTank is Required",});
         }
-        
         const productPictures = req.files.map(file => file.path.replace('uploads\\', ''));
 
         const slug = slugify(name);
@@ -85,7 +97,17 @@ const createCar = async (req, res) => {
             slug: slug,
             description: description,
             brand: brand,
-            productPictures: productPictures
+            productPictures: productPictures,
+            price:price,
+            fuelType:fuelType,
+            transmission:transmission,
+            engineSize:engineSize,
+            mileage:mileage,
+            safetyrating:safetyrating,
+            warranty:warranty,
+            seater:seater,
+            size:size,
+            fuelTank:fuelTank
         });
 
         await car.save();
@@ -104,14 +126,32 @@ const createCar = async (req, res) => {
         });
     }
 };
+    
+
 
 const deleteCar = async (req,res) => {
     try{
-        await carModel.findByIdAndDelete(req.params.pid).select("-photo")
+        const carModel_ = await carModel.findById(req.params.pid)
+        try{
+            for(const x of carModel_.productPictures){
+                fs.unlink(path.join(__dirname, '../uploads/',x), (err)=> {
+                    if(err){
+                        throw err;
+                    }
+                })
+            
+
+                
+            }
+        }catch(e){
+            console.log("Delte: " +e)
+        }
+        await carModel.findByIdAndDelete(req.params.pid)
         res.status(200).send({
             success:true,
             message:"Car Deleted Successfully"
-        })
+        });
+
     }catch(err){
         res.status(500).send({
             success:false,

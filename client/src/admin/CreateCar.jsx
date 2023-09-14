@@ -13,6 +13,17 @@ const CreateCar = () => {
     const [description, setDescription] = useState('');
     const [shipping, setShipping] = useState('');
     const [productPictures, setProductPictures] = useState([]);
+    const [price, setprice] = useState('');
+    const [fuelType, setfuelType] = useState('');
+    const [transmission, settransmission] = useState('');
+    const [engineSize, setengineSize] = useState('');
+    const [mileage, setmileage] = useState('');
+    const [safetyrating, setsafetyrating] = useState('');
+    const [warranty, setwarranty] = useState('');
+    const [seater, setseater] = useState('');
+    const [size, setsize] = useState('');
+    const [fuelTank, setfuelTank] = useState('');
+
     const navigate = useNavigate();
 
     const getAllCar = async () => {
@@ -39,8 +50,17 @@ const CreateCar = () => {
             carData.append('description', description);
             carData.append('shipping', shipping);
             carData.append('brand', brand);
+            carData.append('price', price);
+            carData.append('fuelType', fuelType);
+            carData.append('transmission', transmission);
+            carData.append('engineSize', engineSize);
+            carData.append('mileage', mileage);
+            carData.append('safetyrating', safetyrating);
+            carData.append('warranty', warranty);
+            carData.append('seater', seater);
+            carData.append('size', size);
+            carData.append('fuelTank', fuelTank);
 
-            // Append each selected image to the FormData
             productPictures.forEach((image, index) => {
                 carData.append(`productPictures`, image);
             });
@@ -126,6 +146,96 @@ const CreateCar = () => {
                                         placeholder='write a car name'
                                         className='form-control'
                                         onChange={(e) => setName(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={price}
+                                        placeholder='write a car price'
+                                        className='form-control'
+                                        onChange={(e) => setprice(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={fuelType}
+                                        placeholder='write a car fueltype'
+                                        className='form-control'
+                                        onChange={(e) => setfuelType(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={transmission}
+                                        placeholder='write a car transmission'
+                                        className='form-control'
+                                        onChange={(e) => settransmission(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={engineSize}
+                                        placeholder='write a car enginesize'
+                                        className='form-control'
+                                        onChange={(e) => setengineSize(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={mileage}
+                                        placeholder='write a car mileage'
+                                        className='form-control'
+                                        onChange={(e) => setmileage(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={safetyrating}
+                                        placeholder='write a car safetyrating'
+                                        className='form-control'
+                                        onChange={(e) => setsafetyrating(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={warranty}
+                                        placeholder='write a car warranty'
+                                        className='form-control'
+                                        onChange={(e) => setwarranty(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={seater}
+                                        placeholder='write a car seater'
+                                        className='form-control'
+                                        onChange={(e) => setseater(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={size}
+                                        placeholder='write a car height and width'
+                                        className='form-control'
+                                        onChange={(e) => setsize(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mb-3'>
+                                    <input
+                                        type='text'
+                                        value={fuelTank}
+                                        placeholder='write a car fueltank'
+                                        className='form-control'
+                                        onChange={(e) => setfuelTank(e.target.value)}
                                     />
                                 </div>
                                 <div className='mb-3'>
