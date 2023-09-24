@@ -1,9 +1,10 @@
 const { default: slugify } = require('slugify')
 const brandModel = require('../models/carBrand')
+const fs = require('fs')
 
 const getBrand = async (req,res) => {
     try{
-        const brand = await brandModel.find({})
+        const brand = await brandModel.find({}).populate('carInvoleInThisBrand')
 
         res.status(200).send({
             success:true,
@@ -22,7 +23,7 @@ const getBrand = async (req,res) => {
 
 const getBrandById = async (req,res) => {
     try{
-        const brand = await brandModel.findOne({slug:req.params.slug})
+        const brand = await brandModel.findOne({slug:req.params.slug}).populate('carInvoleInThisBrand')
 
         res.status(200).send({
             success:true,
@@ -41,11 +42,17 @@ const getBrandById = async (req,res) => {
 const createBrand = async (req,res) => {
     try{
         const {name} = req.body
+        const brandPictures = req.file.path.replace('uploads/', '')
 
         if(!name){
-            return res.status(401).send({
-                message:"Name is Required"
-            })
+            return res.send({message:'Brand Name is Required'})
+        }
+        if(!brandPictures){
+            return res.send({message:'Brand Image is Required'})
+        }
+
+        if(!name || !brandPictures){
+            return res.send({message:'Please fill all the fields'})
         }
 
         const existCategory = await brandModel.findOne({name})
@@ -57,11 +64,13 @@ const createBrand = async (req,res) => {
             })
         }
 
-        const brand = await new brandModel({name,slug:slugify(name)}).save()
+        const brand = new brandModel({name,brandPictures,slug:slugify(name)})
+        await brand.save()
+        console.log(brand)
         res.status(201).send({
             success:true,
             message:'Brand Created Successfully',
-            brand
+            brand,
         })
     }catch(err){
         res.status(500).send({
@@ -95,6 +104,17 @@ const updateBrand = async (req,res) => {
 const deleteBrand = async (req,res) => {
     try{
         const {id} = req.params
+        try{
+            for(const x of carModel_.brandPictures){
+                fs.unlink(path.join(__dirname, '../uploads/',x), (err)=> {
+                    if(err){
+                        throw err;
+                    }
+                })                
+            }
+        }catch(e){
+            console.log("Delte: " +e)
+        }
         await brandModel.findByIdAndDelete(id)
         res.status(200).send({
             success:true,

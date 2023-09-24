@@ -4,7 +4,8 @@ const orderModel = require("../models/orderModel")
 const fs = require('fs')
 const braintree = require("braintree");
 const dotenv = require('dotenv')
-const path = require('path')
+const path = require('path');
+const brandModel = require("../models/carBrand");
 
 dotenv.config()
 
@@ -18,7 +19,7 @@ var gateway = new braintree.BraintreeGateway({
 
 const getAllCar = async (req,res) => {
     try{
-        const car = await carModel.find({}).populate('brand').select('-photo')
+        const car = await carModel.find({}).populate('brand')
 
         res.status(200).send({
             success:true,
@@ -88,8 +89,7 @@ const createCar = async (req, res) => {
             case !size: res.status(500).send({success: false,message: "size is Required",});
             case !fuelTank: res.status(500).send({success: false,message: "fuelTank is Required",});
         }
-        const productPictures = req.files.map(file => file.path.replace('uploads\\', ''));
-
+        const productPictures = req.files.map(file => file.path.replace('uploads/', ''));
         const slug = slugify(name);
 
         const car = new carModel({
@@ -111,6 +111,10 @@ const createCar = async (req, res) => {
         });
 
         await car.save();
+
+        const category = await brandModel.findById({_id : brand});
+        await category.carInvoleInThisBrand.push(car);
+        category.save();
 
         res.status(201).send({
             success: true,
@@ -163,21 +167,26 @@ const deleteCar = async (req,res) => {
 
 const updatecar = async (req,res) => {
     try{
-        const {name,description,brand} = req.fields
-        // const {photo} = req.files
+        const {name,description,fuelType,transmission,engineSize,mileage,safetyrating,warranty,seater,size,fuelTank,price} = req.fields
 
         switch(true){
-            case !name : return res.status(500).send({message:"Name is required"})
-            case !description : return res.status(500).send({message:"Description is required"})
-            case !brand : return res.status(500).send({message:"Brand is required"})
-            // case !photo : return res.status(500).send({message:"Photo is required and should be less than 1Mb"})
+            case !name : return res.send({message:"Name is required"})
+            case !description : return res.send({message:"Description is required"})
+            case !price : return res.send({message:"Price is required"})
+            case !fuelType : return res.send({message:"FuelType is required"})
+            case !transmission : return res.send({message:"Transmission is required"})
+            case !engineSize : return res.send({message:"EngineSize is required"})
+            case !mileage : return res.send({message:"Mileage is required"})
+            case !safetyrating : return res.send({message:"Safetyrating is required"})
+            case !warranty : return res.send({message:"Warranty is required"})
+            case !seater : return res.send({message:"Seater is required"})
+            case !size : return res.send({message:"Size is required"})
+            case !fuelTank : return res.send({message:"Fuel Tank is required"})
+            // case !brand : return res.status(500).send({message:"Brand is required"})
         }
 
         const car = await carModel.findByIdAndUpdate(req.params.pid,{...req.fields,slug:slugify(name)},{new:true})
-        // if(photo){
-        //     car.photo.data = fs.readFileSync(photo.path)
-        //     car.photo.contentType = photo.type
-        // }
+
         await car.save()
         res.status(201).send({
             success:true,
@@ -189,6 +198,28 @@ const updatecar = async (req,res) => {
         res.status(500).send({
             success:false,
             message:"Error in Updating Car",
+            err
+        })
+    }
+}
+
+const relatedCar = async (req,res) => {
+    try{
+        const {cid,bid} = req.params
+        const cars = await carModel.find({
+            brand:bid,
+            _id:{$ne:cid}
+        }).populate('brand')
+
+        res.status(200).send({
+            success:true,
+            message:'Related Cars for this Brands',
+            cars
+        })
+    }catch(err){
+        res.status(400).send({
+            success:false,
+            message:"Error While Fetching Related Car",
             err
         })
     }
@@ -241,4 +272,4 @@ const brainTreePaymentController = async (req,res) => {
       }
 }
 
-module.exports = {createCar,getAllCar,getCarById,getPhotoById,deleteCar,updatecar,braintreeTokenController,brainTreePaymentController}
+module.exports = {createCar,getAllCar,getCarById,getPhotoById,deleteCar,updatecar,relatedCar,braintreeTokenController,brainTreePaymentController}

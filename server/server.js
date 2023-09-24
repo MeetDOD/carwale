@@ -9,7 +9,9 @@ const app = express();
 
 app.use(express.json())
 dotenv.config()
-app.use(cors())
+app.use(cors({
+    origin:['https://carwale.shop','https://carwale.vercel.app']
+}))
 
 connection();
 
@@ -20,5 +22,5 @@ app.use('/api/brand',brandRoutes);
 app.use('/api/car',carRoutes);
 
 app.listen(process.env.PORT,() => {
-    console.log('Car Running on port 8000');
+    console.log('Car Running on port 5000');
 })

@@ -1,0 +1,30 @@
+.brand_wrapper {
+  padding: 100px 0;
+}
+.brand_wrapper .brand_subtitle {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 5px;
+  color: #8400ff;
+}
+.brand_wrapper .brand_title {
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 1.25;
+  margin-bottom: 25px;
+  color: #101010;
+}
+.brand_wrapper .showcase_card img {
+  width: 100%;
+  border-radius: 15px;
+  padding: 45px 25px;
+  background-color: white;
+  box-shadow: 0 5px 40px rgb(0 0 0 / 8%);
+  transition: 0.7s;
+}
+.brand_wrapper .showcase_card img:hover {
+  transform: scale(1.2);
+  position: relative;
+  z-index: 2;
+}

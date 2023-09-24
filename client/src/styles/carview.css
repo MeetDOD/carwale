@@ -1,0 +1,16 @@
+@media (max-width: 767px) {
+  .centerMob {
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+.image-gallery-thumbnail img {
+  max-width: 150px;
+  height: 50px;
+}
+
+.image-gallery .image-gallery-slide img {
+  width: 100% !important;
+  height: 400px !important;
+}

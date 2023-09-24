@@ -54,8 +54,8 @@ const carSchema = mongoose.Schema({
         required:true
     },
     brand:{
-        type:mongoose.ObjectId,
-        ref:'brand'
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'brand'
     },
     productPictures:[
         {

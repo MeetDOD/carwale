@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/auth";
-import Sipnner from '../components/Spinner'
+import Sipnner from '../admin/Spinner'
 
 export default function PrivateRoute() {
     const [ok, setOk] = useState(false);
@@ -10,7 +10,7 @@ export default function PrivateRoute() {
 
     useEffect(() => {
         const authCheck = async () => {
-            const res = await axios.get("http://localhost:5000/api/user/user-auth");
+            const res = await axios.get("https://velocity-vehicles-backend-production.up.railway.app/api/user/user-auth");
             if (res.data.ok) {
                 setOk(true);
             } else {

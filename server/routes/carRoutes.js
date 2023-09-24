@@ -1,6 +1,6 @@
 const express = require('express')
 const { isAdmin, requireLogin } = require('../middleware/authMiddleware');
-const {createCar,getAllCar, getCarById,getPhotoById,deleteCar,updatecar,braintreeTokenController,brainTreePaymentController} = require('../controllers/carController');
+const {createCar,getAllCar, getCarById,getPhotoById,deleteCar,relatedCar,updatecar,braintreeTokenController,brainTreePaymentController} = require('../controllers/carController');
 const formidable = require('express-formidable')
 const multer  = require('multer')
 const path = require('path')
@@ -27,6 +27,8 @@ router.post('/create-car',requireLogin,isAdmin,upload.array('productPictures',50
 
 router.put('/update-car/:pid',requireLogin,isAdmin,formidable(),updatecar);
 router.delete('/delete-car/:pid',requireLogin,isAdmin,deleteCar);
+
+router.get('/related-car/:cid/:bid',relatedCar)
 
 router.get("/braintree/token", braintreeTokenController);
 router.post("/braintree/payment", requireLogin, brainTreePaymentController);

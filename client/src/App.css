@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Mea+Culpa&family=Poppins:wght@100&family=Sarabun:wght@700&family=Space+Grotesk:wght@600&family=Tektur&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Mea+Culpa&family=Open+Sans:wght@800&family=Poppins:wght@100&family=Sarabun:wght@700&family=Space+Grotesk:wght@600&family=Tektur&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h4,
+h5,
+h6,
+p,
+li {
+  font-family: "Sarabun";
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Open Sans";
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.marginStyle {
+  margin-top: 120px;
+  margin-bottom: 150px;
+}
+
+.cartStyle {
+  background-image: linear-gradient(
+    to top,
+    #9d68ce,
+    #9958da,
+    #9446e7,
+    #8d2ff3,
+    #8400ff
+  );
+}
+
+@media (max-width: 485px) {
+  .sizePrice {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 486px) {
+  .sizePrice {
+    font-size: 20px;
+  }
+}
