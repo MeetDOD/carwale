@@ -55,7 +55,7 @@ const UserOrder = () => {
                                                     <td>{o?.buyer?.name}</td>
                                                     <td>{moment(o?.createdAt).fromNow()}</td>
                                                     <td>
-                                                        <span className="badge text-bg-success">{o?.payment.success ? "Failed" : "Success"}</span>
+                                                        <span className="badge text-bg-success">{o?.payment.success ? "Success" : "Failed"}</span>
                                                     </td>
                                                 </tr>
                                             </tbody>

@@ -80,7 +80,7 @@ const AdminOrders = () => {
                                                     <th>{o?.buyer?.name}</th>
                                                     <th>{moment(o?.createdAt).fromNow()}</th>
                                                     <th>
-                                                        <span className="badge text-bg-success">{o?.payment.success ? "Failed" : "Success"}</span>
+                                                        <span className="badge text-bg-success">{o?.payment.success ? "Success" : "Failed"}</span>
                                                     </th>
                                                 </tr>
                                             </tbody>

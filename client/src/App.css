@@ -7,6 +7,11 @@
   padding: 0;
 }
 
+*::selection {
+  color: white;
+  background-color: blueviolet;
+}
+
 h4,
 h5,
 h6,
@@ -50,5 +55,26 @@ h3 {
 @media (min-width: 486px) {
   .sizePrice {
     font-size: 20px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .respName {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 991px) {
+  .respName {
+    font-size: 15px;
+  }
+  .respBrand {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 480px) {
+  .filterRes {
+    text-align: center;
   }
 }

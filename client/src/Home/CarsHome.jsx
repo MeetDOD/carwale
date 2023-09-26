@@ -44,11 +44,11 @@ const CarsHome = () => {
             </div>
             <div className="container">
                 <div className="row" style={{ marginTop: '-40px' }}>
-                    {cars.slice(0, 6).map((p) => (
+                    {cars.slice(0, 8).map((p) => (
                         <div className="col-md-12 col-lg-3 mb-3 mb-lg-0 my-3">
                             <div className="card">
                                 <div className="d-flex justify-content-between p-3">
-                                    <p className="lead mb-0">{p.brand.name}</p>
+                                    <p className="lead mb-0 respBrand">{p.brand.name}</p>
                                     <div
                                         className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                                         style={{ width: '35px', height: '35px' }}>
@@ -60,15 +60,15 @@ const CarsHome = () => {
                                 <Link to={`/car/${p.slug}`} className='text-center'>
                                     <img src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '130px', objectFit: 'contain' }} className='border rounded' />
                                 </Link>
-                                <div className="card-body">
-                                    <h4 className="text-center mb-4">{p.name}</h4>
+                                <div className="card-body ">
+                                    <h4 className="text-center mb-4 respName">{p.name}</h4>
                                     <div className="d-flex justify-content-between">
-                                        <h6><PiCurrencyInrFill /> : {p.price} Lakhs</h6>
-                                        <h6 ><BsFuelPumpFill /> : {p.fuelType}</h6>
+                                        <h6 className='respBrand'><PiCurrencyInrFill /> : {p.price} Lakhs</h6>
+                                        <h6 className='respBrand'><BsFuelPumpFill /> : {p.fuelType}</h6>
                                     </div>
                                     <div className="d-flex justify-content-between my-2">
-                                        <h6 ><TbStars /> : {p.safetyrating}</h6>
-                                        <h6 ><MdAirlineSeatReclineExtra /> : {p.seater} Seater</h6>
+                                        <h6 className='respBrand'><TbStars /> : {p.safetyrating}</h6>
+                                        <h6 className='respBrand'><MdAirlineSeatReclineExtra /> : {p.seater} Seater</h6>
                                     </div>
                                     <div className='text-center'>
                                         <Link className='btn my-2  ' style={{ backgroundColor: 'blueviolet', color: 'white' }} to={`/car/${p.slug}`}><AiOutlineEye size={20} className='pb-1' /> View</Link>

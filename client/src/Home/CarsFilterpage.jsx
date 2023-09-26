@@ -85,17 +85,14 @@ const CarsHome = () => {
             <div className="container">
                 <div className="row" style={{ marginBottom: '100px', marginTop: '-50px' }}>
                     <div className='col-md-12 col-lg-3'>
-                        <h4 className="text-center">Search Your Car</h4>
-                        <div class="input-group mx-4">
+                        <h4 >🔎 Search Your Car</h4>
+                        <div class="input-group d-flex flex-column row">
                             <div class="form-outline">
-                                <input type="search" placeholder="Search your car interest..."
+                                <input type="search" placeholder="🔎 Search your car..."
                                     onChange={(e) => setsearch(e.target.value)} class="form-control" />
                             </div>
-                            <div class="btn text-white" style={{ backgroundColor: 'blueviolet' }}>
-                                <AiOutlineSearch size={25} />
-                            </div>
                         </div>
-                        <h4 className="text-center mt-4">Filter By Brands</h4>
+                        <h4 className=" mt-4">Filter By Brands</h4>
                         <div className="d-flex flex-column">
                             {brand?.map((c) => (
                                 <Checkbox
@@ -107,7 +104,7 @@ const CarsHome = () => {
                                 </Checkbox>
                             ))}
                         </div>
-                        <h4 className="text-center mt-4">Filter By Price Range</h4>
+                        <h4 className=" mt-4">Filter By Price Range</h4>
                         <div className="d-flex flex-column">
                             <Radio.Group onChange={handlePriceChange} value={selectedPriceRange}>
                                 {Price.map((p) => (
@@ -141,7 +138,7 @@ const CarsHome = () => {
                                     <div className="col-md-12 col-lg-4 mb-3">
                                         <div className="card ">
                                             <div className="d-flex justify-content-between p-3">
-                                                <p className="lead mb-0">{p.brand.name}</p>
+                                                <p className="lead mb-0 respBrand">{p.brand.name}</p>
                                                 <div
                                                     className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                                                     style={{ width: '35px', height: '35px' }}
@@ -167,14 +164,14 @@ const CarsHome = () => {
                                                 />
                                             </Link>
                                             <div className="card-body">
-                                                <h4 className="text-center mb-4">{p.name}</h4>
+                                                <h4 className="text-center mb-4 respName">{p.name}</h4>
                                                 <div className="d-flex justify-content-between">
-                                                    <h6><PiCurrencyInrFill /> : {p.price} Lakhs</h6>
-                                                    <h6 ><BsFuelPumpFill /> : {p.fuelType}</h6>
+                                                    <h6 className='respBrand'><PiCurrencyInrFill /> : {p.price} Lakhs</h6>
+                                                    <h6 className='respBrand'><BsFuelPumpFill /> : {p.fuelType}</h6>
                                                 </div>
                                                 <div className="d-flex justify-content-between my-2">
-                                                    <h6 ><TbStars /> : {p.safetyrating}</h6>
-                                                    <h6 ><MdAirlineSeatReclineExtra /> : {p.seater} Seater</h6>
+                                                    <h6 className='respBrand'><TbStars /> : {p.safetyrating}</h6>
+                                                    <h6 className='respBrand'><MdAirlineSeatReclineExtra /> : {p.seater} Seater</h6>
                                                 </div>
                                                 <div className='text-center'>
                                                     <Link
