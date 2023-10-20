@@ -24,7 +24,7 @@ const CarsHome = () => {
 
     const getAllBrand = async () => {
         try {
-            const { data } = await axios.get('https://velocity-vehicles-backend-production.up.railway.app/api/brand/getAll-brand')
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getAll-brand`)
             if (data.success) {
                 setBrand(data.brand)
             }
@@ -35,7 +35,7 @@ const CarsHome = () => {
 
     const getAllcars = async () => {
         try {
-            const data = await fetch("https://velocity-vehicles-backend-production.up.railway.app/api/car/getAll-car", {
+            const data = await fetch(`${process.env.REACT_APP_API_URL}/api/car/getAll-car`, {
                 method: "GET",
                 headers: { "Content-type": "application/json" }
             })
@@ -148,7 +148,7 @@ const CarsHome = () => {
                                                         className="text-white mb-0 small"
                                                     >
                                                         <img
-                                                            src={`https://velocity-vehicles-backend-production.up.railway.app/${p.brand.brandPictures}`}
+                                                            src={`${process.env.REACT_APP_API_URL}/${p.brand.brandPictures}`}
                                                             alt={p.brand.name}
                                                             style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }}
                                                         />
@@ -157,7 +157,7 @@ const CarsHome = () => {
                                             </div>
                                             <Link to={`/car/${p.slug}`} className='text-center'>
                                                 <img
-                                                    src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`}
+                                                    src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`}
                                                     alt={p.name}
                                                     style={{ maxWidth: '100%', maxHeight: '130px', objectFit: 'contain' }}
                                                     className='border rounded'

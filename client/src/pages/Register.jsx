@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
-import { MdEmail } from 'react-icons/md'
-import { RiLockPasswordFill, RiAccountCircleFill } from 'react-icons/ri'
-import logo from '../images/logo.png'
 import register from '../images/register.png'
-import { AiFillMobile } from 'react-icons/ai'
-import { FaAddressCard } from 'react-icons/fa6'
 import toast from 'react-hot-toast';
 import '../styles/hero.css'
 
@@ -30,7 +25,7 @@ const Register = () => {
             return false;
         }
         try {
-            const res = await axios.post('https://velocity-vehicles-backend-production.up.railway.app/api/user/register', {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/user/register`, {
                 name, email, password, phone, address
             });
             if (res.data.success) {
@@ -58,7 +53,7 @@ const Register = () => {
                 return false;
             }
         } catch (err) {
-            console.log(err)
+            toast.error('Server Error')
         }
     }
 
@@ -67,76 +62,61 @@ const Register = () => {
     }, []);
 
     return (
-        <div className='marginStyle'>
-            <div class="container border rounded">
-                <div class="row d-flex justify-content-center align-items-center ">
-                    <div class="col col-xl-10">
-                        <div class="row g-0">
-                            <div class="col-md-6 col-lg-6 d-none d-md-block header-img-section" style={{ marginTop: '110px' }}>
-                                <img src={register}
-                                    alt="login form" class="img-fluid" />
+        <div>
+            <div className='marginStyle'>
+                <div class="container d-flex justify-content-center align-items-center">
+                    <div class="row border rounded-5 p-3 bg-white shadow box-area reverseCol">
+                        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
+                            <div class="featured-image mb-3 animateImg">
+                                <img src={register} class="img-fluid" width={500} />
                             </div>
-                            <div class="col-md-6 col-lg-6 d-flex align-items-center">
-                                <div class="card-body p-4 p-lg-5 text-black">
-                                    <form>
-                                        <div class="text-center mb-3 d-flex">
-                                            <h1 class="text-center">Register</h1>
-                                            <img src={logo} style={{ maxWidth: '100%', maxHeight: '70px', objectFit: 'contain' }} />
-                                        </div>
-
-                                        <div class="d-flex flex-row align-items-center mb-4">
-                                            <RiAccountCircleFill size={25} style={{ marginRight: '7px' }} />
-                                            <div class="form-outline flex-fill mb-0">
-                                                <input value={name} onChange={(e) => setName(e.target.value)} placeholder='Your name' required type="text" class="form-control" />
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex flex-row align-items-center mb-4">
-                                            <MdEmail size={25} style={{ marginRight: '7px' }} />
-                                            <div class="form-outline flex-fill mb-0">
-                                                <input value={email} onChange={(e) => setEmail(e.target.value)} required type="email" placeholder='Your email ID' class="form-control " />
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex flex-row align-items-center mb-4">
-                                            <RiLockPasswordFill size={25} style={{ marginRight: '7px' }} />
-                                            <div class="form-outline flex-fill mb-0">
-                                                <input value={password} onChange={(e) => setPassword(e.target.value)} required type="password" placeholder='Your password' class="form-control " />
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex flex-row align-items-center mb-4">
-                                            <AiFillMobile size={25} style={{ marginRight: '7px' }} />
-                                            <div class="form-outline flex-fill mb-0">
-                                                <input value={phone} onChange={(e) => setPhone(e.target.value)} type="number" required placeholder='Your phone number' class="form-control " />
-                                            </div>
-                                        </div>
-
-                                        <div class="mx-1 d-flex flex-row align-items-center mb-4">
-                                            <FaAddressCard size={25} style={{ marginRight: '7px' }} />
-                                            <div class="form-outline flex-fill mb-0 ">
-                                                <input value={address} onChange={(e) => setAddress(e.target.value)} type="text" required placeholder='Your address' class="form-control" />
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex flex-row align-items-center mb-4 ">
-                                            <div class="form-outline flex-fill mb-0">
-                                                <button class="btn btn-lg text-white" onClick={handleSubmit} type="button" style={{ backgroundColor: 'blueviolet', width: '100%' }}>Register</button>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex flex-row align-items-center mb-4 ">
-                                            <div class="form-outline flex-fill mb-0">
-                                                <Link to='/login' class="btn btn-outline-dark btn-lg btn-block" type="button" style={{ width: '100%' }}>Login</Link>
-                                            </div>
-                                        </div>
-                                    </form>
+                        </div>
+                        <div class="col-md-6 right-box">
+                            <div class="row align-items-center">
+                                <div class="header-text mb-4">
+                                    <h2>Welcome</h2>
+                                    <p>Your Dream Car is Waiting !</p>
+                                </div>
+                                <div class="input-group d-flex  align-items-center mb-3">
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input value={name} onChange={(e) => setName(e.target.value)} placeholder='Your name' required type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="input-group d-flex flex-row align-items-center mb-3">
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input value={email} onChange={(e) => setEmail(e.target.value)} required type="email" placeholder='Your email ID' class="form-control " />
+                                    </div>
+                                </div>
+                                <div class="input-group d-flex flex-row align-items-center mb-3">
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input value={password} onChange={(e) => setPassword(e.target.value)} required type="password" placeholder='Your password' class="form-control " />
+                                    </div>
+                                </div>
+                                <div class="input-group d-flex flex-row align-items-center mb-3">
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input value={phone} onChange={(e) => setPhone(e.target.value)} type="number" required placeholder='Your phone number' class="form-control " />
+                                    </div>
+                                </div>
+                                <div class="input-group d-flex flex-row align-items-center mb-3">
+                                    <div class="form-outline flex-fill mb-0">
+                                        <input value={address} onChange={(e) => setAddress(e.target.value)} type="text" required placeholder='Your address' class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mt-4 ">
+                                    <div class="form-outline flex-fill mb-0">
+                                        <button class="btn btn-lg  text-white" type="button" onClick={handleSubmit} style={{ backgroundColor: 'blueviolet', width: '100%' }} >Register</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center my-3 ">
+                                    <div class="form-outline flex-fill mb-0 " >
+                                        <Link to='/login' class="btn btn-outline-dark btn-lg btn-block" style={{ width: '100%' }} type="button">Login</Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </div>
     )
 }

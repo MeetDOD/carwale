@@ -26,7 +26,7 @@ const CarView = () => {
 
     const getCar = async () => {
         try {
-            const { data } = await axios.get(`https://velocity-vehicles-backend-production.up.railway.app/api/car/getCarById-car/${params.slug}`);
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/car/getCarById-car/${params.slug}`);
             setCar(data.car);
             getRelatedCar(data?.car._id, data?.car.brand._id)
         } catch (err) {
@@ -36,7 +36,7 @@ const CarView = () => {
 
     const getRelatedCar = async (cid, bid) => {
         try {
-            const { data } = await axios.get(`https://velocity-vehicles-backend-production.up.railway.app/api/car/related-car/${cid}/${bid}`)
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/car/related-car/${cid}/${bid}`)
             setRelatedCar(data?.cars)
         } catch (err) {
             console.log(err)
@@ -56,11 +56,11 @@ const CarView = () => {
 
     const updatedAt = new Date(car.updatedAt).toLocaleString();
 
-    const imageUrls = car.productPictures.map(picture => `https://velocity-vehicles-backend-production.up.railway.app/${picture}`);
+    const imageUrls = car.productPictures.map(picture => `${process.env.REACT_APP_API_URL}/${picture}`);
 
     const imageGalleryData = car.productPictures.map((picture) => ({
-        original: `https://velocity-vehicles-backend-production.up.railway.app/${picture}`,
-        thumbnail: `https://velocity-vehicles-backend-production.up.railway.app/${picture}`, // You can adjust this as needed
+        original: `${process.env.REACT_APP_API_URL}/${picture}`,
+        thumbnail: `${process.env.REACT_APP_API_URL}/${picture}`,
     }));
 
     return (
@@ -80,7 +80,7 @@ const CarView = () => {
                         <Link to={`/brand/${car.brand.name}`}>
                             <img
                                 decoding="async"
-                                src={`https://velocity-vehicles-backend-production.up.railway.app/${car.brand.brandPictures}`}
+                                src={`${process.env.REACT_APP_API_URL}/${car.brand.brandPictures}`}
                                 className="img-fluid"
                                 style={{ maxWidth: '100%', maxHeight: '40px', objectFit: 'contain' }}
                             />
@@ -155,12 +155,12 @@ const CarView = () => {
                                                 className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                                                 style={{ width: '35px', height: '35px' }}>
                                                 <p className="text-white mb-0 small">
-                                                    <img src={`https://velocity-vehicles-backend-production.up.railway.app/${p.brand.brandPictures}`} alt={p.brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
+                                                    <img src={`${process.env.REACT_APP_API_URL}/${p.brand.brandPictures}`} alt={p.brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
                                                 </p>
                                             </Link>
                                         </div>
                                         <Link to={`/car/${p.slug}`} className='text-center'>
-                                            <img src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
+                                            <img src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
                                         </Link>
                                         <div className="card-body">
                                             <h4 className="text-center mb-4">{p.name}</h4>

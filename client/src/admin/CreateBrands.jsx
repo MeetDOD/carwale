@@ -42,7 +42,7 @@ const CreateBrands = () => {
             brandPictures.forEach((image, index) => {
                 carData.append(`brandPictures`, image);
             });
-            const { data } = await axios.post('https://velocity-vehicles-backend-production.up.railway.app/api/brand/create-brand', carData);
+            const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/brand/create-brand`, carData);
 
             if (data.success) {
                 toast.success('Brand Created Successfully');

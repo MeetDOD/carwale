@@ -15,6 +15,18 @@ const Navbar = () => {
     const [click, setClick] = useState(false)
     const handleClick = () => setClick(!click)
 
+    const [color, setcolor] = useState(false)
+
+    const changeColor = () => {
+        if (window.scrollY >= 90) {
+            setcolor(true)
+        } else {
+            setcolor(false)
+        }
+    }
+
+    window.addEventListener('scroll', changeColor)
+
     const handleSubmit = () => {
         setAuth({
             ...auth,
@@ -44,7 +56,7 @@ const Navbar = () => {
         };
     }, []);
     return (
-        <header className='header_wrapper'>
+        <header className={color ? 'header_wrapper header-scrolled' : 'header_wrapper'}>
             <nav className="navbar navbar-expand-lg fixed-top">
                 <div className="container-fluid mx-3">
                     <Link to='/'>

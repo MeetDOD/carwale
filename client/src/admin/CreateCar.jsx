@@ -95,7 +95,7 @@ const CreateCar = () => {
 
     const getAllCar = async () => {
         try {
-            const { data } = await axios.get('https://velocity-vehicles-backend-production.up.railway.app/api/brand/getAll-brand');
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getAll-brand`);
             if (data.success) {
                 setBrands(data?.brand);
             }
@@ -135,7 +135,7 @@ const CreateCar = () => {
             productPictures.forEach((image, index) => {
                 carData.append(`productPictures`, image);
             });
-            const { data } = await axios.post('https://velocity-vehicles-backend-production.up.railway.app/api/car/create-car', carData);
+            const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/car/create-car`, carData);
 
             if (data.success) {
                 toast.success('Car Created Successfully');

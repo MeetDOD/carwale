@@ -10,7 +10,7 @@ export default function AdminRoutes() {
 
     useEffect(() => {
         const authCheck = async () => {
-            const res = await axios.get("https://velocity-vehicles-backend-production.up.railway.app/api/user/admin-auth");
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/admin-auth`);
             if (res.data.ok) {
                 setOk(true);
             } else {

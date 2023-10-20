@@ -10,7 +10,7 @@ export default function PrivateRoute() {
 
     useEffect(() => {
         const authCheck = async () => {
-            const res = await axios.get("https://velocity-vehicles-backend-production.up.railway.app/api/user/user-auth");
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/user-auth`);
             if (res.data.ok) {
                 setOk(true);
             } else {

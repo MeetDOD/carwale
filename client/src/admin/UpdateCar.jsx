@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import AdminMenu from './AdminMenu'
 import axios from 'axios'
-// import { Select, Modal } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
-
-// const { Option } = Select
 
 const UpdateCar = () => {
 
     const params = useParams()
 
-    // const [brands, setBrands] = useState([])
-    // const [brand, setBrand] = useState('')
     const [name, setname] = useState('')
     const [description, setdescription] = useState('')
     const [price, setprice] = useState('');
@@ -31,9 +26,8 @@ const UpdateCar = () => {
 
     const getSingleProduct = async () => {
         try {
-            const { data } = await axios.get(`https://velocity-vehicles-backend-production.up.railway.app/api/car/getCarById-car/${params.slug}`)
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/car/getCarById-car/${params.slug}`)
             setname(data.car.name)
-            // setBrand(data.car.brand)
             setdescription(data.car.description)
             setprice(data.car.price)
             setfuelType(data.car.fuelType)
@@ -51,20 +45,6 @@ const UpdateCar = () => {
         }
     }
 
-    // const getAllCarBrand = async () => {
-    //     try {
-    //         const data = await fetch("https://velocity-vehicles-backend-production.up.railway.app/api/brand/getAll-brand", {
-    //             method: "GET",
-    //             headers: { "Content-type": "application/json" }
-    //         })
-    //         const data_ = await data.json()
-    //         setBrands(data_.brand)
-    //         console.log(data_)
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
@@ -81,9 +61,8 @@ const UpdateCar = () => {
             carData.append('size', size)
             carData.append('fuelTank', fuelTank)
             carData.append('description', description)
-            // carData.append('brand', brand)
 
-            const { data } = await axios.put(`https://velocity-vehicles-backend-production.up.railway.app/api/car/update-car/${id}`, carData)
+            const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/car/update-car/${id}`, carData)
 
             if (data.success) {
                 toast.success('Car Updated Successfully')
@@ -98,7 +77,7 @@ const UpdateCar = () => {
 
     const handleDelete = async () => {
         try {
-            const { data } = await axios.delete(`https://velocity-vehicles-backend-production.up.railway.app/api/car/delete-car/${id}`)
+            const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}/api/car/delete-car/${id}`)
             toast.success('Car Deleted Successfully')
             navigate('/dashboard/admin/cars')
         } catch (err) {
@@ -107,7 +86,6 @@ const UpdateCar = () => {
     }
 
     useEffect(() => {
-        // getAllCarBrand();
         getSingleProduct();
         window.scrollTo(0, 0)
     }, [])
@@ -122,13 +100,6 @@ const UpdateCar = () => {
                     <div className='col-md-9 my-3'>
                         <h1 className='text-center'>Update Car</h1>
                         <div className='m-1'>
-                            {/* <Select bordered={false} placeholder='Select A Brand' size='large' showSearch className='form-select mb-3' onChange={(e) => { setBrand(e.target.value) }} value={brand.name}>
-                                {brands?.map(c => (
-                                    <Option key={c._id}>
-                                        {c.name}
-                                    </Option>
-                                ))}
-                            </Select> */}
                             <div className='mb-3'>
                                 <input type='text' value={name} placeholder='write a car Name' className='form-control' onChange={(e) => setname(e.target.value)} />
                             </div>

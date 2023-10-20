@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/auth';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const UserOrder = () => {
     const [order, setOrder] = useState([]);
@@ -11,10 +12,10 @@ const UserOrder = () => {
 
     const getOrders = async () => {
         try {
-            const { data } = await axios.get('https://velocity-vehicles-backend-production.up.railway.app/api/user/orders');
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/orders`);
             setOrder(data);
         } catch (err) {
-            console.log(err);
+            toast.error('Server Error');
         }
     };
 
@@ -67,7 +68,7 @@ const UserOrder = () => {
                                                 <div className="col-md-4">
                                                     <Link to={`/car/${p.slug}`} className='text-center'>
                                                         <img
-                                                            src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`}
+                                                            src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`}
                                                             style={{ maxWidth: '100%', maxHeight: '100px', objectFit: 'contain' }}
                                                             alt={p.name}
                                                         />

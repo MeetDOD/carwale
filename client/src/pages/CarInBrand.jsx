@@ -21,7 +21,7 @@ const CarInBrand = () => {
 
     const getCar = async () => {
         try {
-            const { data } = await axios.get(`https://velocity-vehicles-backend-production.up.railway.app/api/brand/getBrandBtId-brand/${params.slug}`);
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getBrandBtId-brand/${params.slug}`);
             setBrand(data.brand);
         } catch (err) {
             console.log(err);
@@ -48,7 +48,7 @@ const CarInBrand = () => {
                         <div className="col-lg-3 col-md-4 col-sm-6 showcase_card">
                             <img
                                 decoding="async"
-                                src={`https://velocity-vehicles-backend-production.up.railway.app/${brand.brandPictures}`}
+                                src={`${process.env.REACT_APP_API_URL}/${brand.brandPictures}`}
                                 className="mb-4 img-fluid"
                                 style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'contain' }}
                             />
@@ -72,12 +72,12 @@ const CarInBrand = () => {
                                             className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                                             style={{ width: '35px', height: '35px' }}>
                                             <p className="text-white mb-0 small">
-                                                <img src={`https://velocity-vehicles-backend-production.up.railway.app/${brand.brandPictures}`} alt={brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
+                                                <img src={`${process.env.REACT_APP_API_URL}/${brand.brandPictures}`} alt={brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
                                             </p>
                                         </div>
                                     </div>
                                     <Link to={`/car/${p.slug}`} className='text-center'>
-                                        <img src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
+                                        <img src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
                                     </Link>
                                     <div className="card-body">
                                         <h4 className="text-center mb-4">{p.name}</h4>

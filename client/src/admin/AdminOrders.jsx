@@ -15,10 +15,10 @@ const AdminOrders = () => {
 
     const getOrders = async () => {
         try {
-            const { data } = await axios.get('https://velocity-vehicles-backend-production.up.railway.app/api/user/allOrders')
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/allOrders`)
             setOrder(data)
         } catch (err) {
-            console.log(err)
+            toast.error('Server Error')
         }
     }
 
@@ -29,7 +29,7 @@ const AdminOrders = () => {
 
     const handleChange = async (orderId, value) => {
         try {
-            const { data } = await axios.put(`https://velocity-vehicles-backend-production.up.railway.app/api/user/orderStatus/${orderId}`, { status: value, });
+            const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/user/orderStatus/${orderId}`, { status: value, });
             getOrders();
             toast.success(`Order Changed to ${value}`)
         } catch (error) {
@@ -92,7 +92,7 @@ const AdminOrders = () => {
                                                 <div className="col-md-4">
                                                     <Link to={`/car/${p.slug}`} className='text-center'>
                                                         <img
-                                                            src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`}
+                                                            src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`}
                                                             style={{ maxWidth: '100%', maxHeight: '100px', objectFit: 'contain' }}
                                                             alt={p.name}
                                                         />

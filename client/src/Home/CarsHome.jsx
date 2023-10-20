@@ -17,7 +17,7 @@ const CarsHome = () => {
 
     const getAllcars = async () => {
         try {
-            const data = await fetch("https://velocity-vehicles-backend-production.up.railway.app/api/car/getAll-car", {
+            const data = await fetch(`${process.env.REACT_APP_API_URL}/api/car/getAll-car`, {
                 method: "GET",
                 headers: { "Content-type": "application/json" }
             })
@@ -53,12 +53,12 @@ const CarsHome = () => {
                                         className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                                         style={{ width: '35px', height: '35px' }}>
                                         <Link to={`/brand/${p.brand.slug}`} className="text-white mb-0 small">
-                                            <img src={`https://velocity-vehicles-backend-production.up.railway.app/${p.brand.brandPictures}`} alt={p.brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
+                                            <img src={`${process.env.REACT_APP_API_URL}/${p.brand.brandPictures}`} alt={p.brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
                                         </Link>
                                     </div>
                                 </div>
                                 <Link to={`/car/${p.slug}`} className='text-center'>
-                                    <img src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '130px', objectFit: 'contain' }} className='border rounded' />
+                                    <img src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '130px', objectFit: 'contain' }} className='border rounded' />
                                 </Link>
                                 <div className="card-body ">
                                     <h4 className="text-center mb-4 respName">{p.name}</h4>

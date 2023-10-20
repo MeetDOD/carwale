@@ -9,7 +9,7 @@ const Brands = () => {
 
     const getAllBrand = async () => {
         try {
-            const { data } = await axios.get('https://velocity-vehicles-backend-production.up.railway.app/api/brand/getAll-brand')
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getAll-brand`)
             if (data.success) {
                 setBrand(data.brand)
             }
@@ -39,7 +39,7 @@ const Brands = () => {
                                 <Link to={`/brand/${c.slug}`}>
                                     <img
                                         decoding="async"
-                                        src={`https://velocity-vehicles-backend-production.up.railway.app/${c.brandPictures}`}
+                                        src={`${process.env.REACT_APP_API_URL}/${c.brandPictures}`}
                                         className="mb-4 img-fluid"
                                         style={{ maxWidth: '100%', maxHeight: '190px', objectFit: 'contain' }}
                                     />

@@ -26,7 +26,7 @@ const UserProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.put("https://velocity-vehicles-backend-production.up.railway.app/api/user/profileUpdate", {
+            const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/user/profileUpdate`, {
                 name,
                 email,
                 password,
@@ -45,8 +45,6 @@ const UserProfile = () => {
                 navigate('/')
             }
         } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong");
         }
     };
     return (

@@ -14,9 +14,9 @@ const CreateCategory = () => {
 
     const getAllBrand = async () => {
         try {
-            const { data } = await axios.get('https://velocity-vehicles-backend-production.up.railway.app/api/brand/getAll-brand')
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getAll-brand`)
             if (data.success) {
-                setBrand(data.brand)
+                setBrand(data.brand.reverse())
             }
         } catch (err) {
             console.log(err)
@@ -26,7 +26,7 @@ const CreateCategory = () => {
     const handleUpdate = async (e) => {
         e.preventDefault()
         try {
-            const { data } = await axios.put(`https://velocity-vehicles-backend-production.up.railway.app/api/brand/update-brand/${selected._id}`, { name: updatedName })
+            const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/brand/update-brand/${selected._id}`, { name: updatedName })
             if (data?.success) {
                 toast.success('Brand Updated Successfully')
                 setSelected(null)
@@ -43,7 +43,7 @@ const CreateCategory = () => {
 
     const handleDelete = async (id) => {
         try {
-            const { data } = await axios.delete(`https://velocity-vehicles-backend-production.up.railway.app/api/brand/delete-brand/${id}`, { name: updatedName })
+            const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}/api/brand/delete-brand/${id}`, { name: updatedName })
             if (data?.success) {
                 toast.success('Brand Deleted Successfully')
                 getAllBrand()
@@ -82,7 +82,7 @@ const CreateCategory = () => {
                                     {brand?.map(c => (
                                         <tr>
                                             <td>
-                                                <img src={`https://velocity-vehicles-backend-production.up.railway.app/${c.brandPictures}`} alt={c.name}
+                                                <img src={`${process.env.REACT_APP_API_URL}/${c.brandPictures}`} alt={c.name}
                                                     style={{ maxWidth: '100%', maxHeight: '50px', objectFit: 'contain' }}
                                                 />
                                             </td>

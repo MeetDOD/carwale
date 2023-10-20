@@ -45,7 +45,7 @@ const Cart = () => {
 
     const getToken = async () => {
         try {
-            const { data } = await axios.get("https://velocity-vehicles-backend-production.up.railway.app/api/car/braintree/token");
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/car/braintree/token`);
             setClientToken(data?.clientToken);
         } catch (error) {
             console.log(error);
@@ -60,7 +60,7 @@ const Cart = () => {
         try {
             setLoading(true);
             const { nonce } = await instance.requestPaymentMethod();
-            const { data } = await axios.post("https://velocity-vehicles-backend-production.up.railway.app/api/car/braintree/payment", {
+            const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/car/braintree/payment`, {
                 nonce,
                 cart
             });
@@ -112,7 +112,7 @@ const Cart = () => {
                                                                 <div>
                                                                     <Link to={`/car/${p.slug}`} className='text-center'>
                                                                         <img
-                                                                            src={`https://velocity-vehicles-backend-production.up.railway.app/${p.productPictures[0]}`}
+                                                                            src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`}
                                                                             className="card-img-top"
                                                                             alt={p.name}
                                                                             style={{ maxWidth: '100%', maxHeight: '80px', objectFit: 'contain' }}
