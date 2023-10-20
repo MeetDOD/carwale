@@ -22,15 +22,7 @@ const Cars = () => {
             console.log(error);
         }
     };
-
-    const truncateText = (text, maxLength) => {
-        const words = text.split(' ');
-        if (words.length > maxLength) {
-            return words.slice(0, maxLength).join(' ') + '...';
-        }
-        return text;
-    };
-
+    
     const handleDelete = async (id) => {
         try {
             const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}/api/car/delete-car/${id}`)
