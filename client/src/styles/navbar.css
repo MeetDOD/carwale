@@ -149,3 +149,12 @@
   border: none;
   box-shadow: none;
 }
+
+#lblCartCount {
+  font-size: 12px;
+  background: blueviolet;
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -5px;
+}

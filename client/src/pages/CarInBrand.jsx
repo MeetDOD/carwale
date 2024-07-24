@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import '../styles/brands.css'
 import { useCart } from '../context/cart';
 import { Link } from 'react-router-dom';
-import '../styles/brands.css'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { AiOutlineEye } from 'react-icons/ai'
 import { MdAirlineSeatReclineExtra } from 'react-icons/md'
@@ -12,19 +11,23 @@ import { BsFuelPumpFill } from 'react-icons/bs'
 import { TbStars } from 'react-icons/tb'
 import { PiCurrencyInrFill } from 'react-icons/pi'
 import toast from 'react-hot-toast';
+import { ColorRing } from 'react-loader-spinner';
 
 const CarInBrand = () => {
 
     const params = useParams();
     const [brand, setBrand] = useState({ name: '', brandPictures: '' })
     const [cart, setcart] = useCart()
+    const [loading, setLoading] = useState(true);
 
     const getCar = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getBrandBtId-brand/${params.slug}`);
             setBrand(data.brand);
+            setLoading(false);
         } catch (err) {
             console.log(err);
+            setLoading(true);
         }
     };
 
@@ -44,16 +47,25 @@ const CarInBrand = () => {
                             <h2 className="brand_title">{brand.name} Car showcase</h2>
                         </div>
                     </div>
-                    <div className="row justify-content-center">
-                        <div className="col-lg-3 col-md-4 col-sm-6 showcase_card">
-                            <img
-                                decoding="async"
-                                src={`${process.env.REACT_APP_API_URL}/${brand.brandPictures}`}
-                                className="mb-4 img-fluid"
-                                style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'contain' }}
+                    {loading ?
+                        <div className="h-100 d-flex align-items-center justify-content-center">
+                            <ColorRing
+                                visible={true}
+                                colors={['#000435', 'rgb(14 165 233)', 'rgb(243 244 246)', '#000435', 'rgb(14 165 233)']}
                             />
                         </div>
-                    </div>
+                        :
+                        <div className="row justify-content-center">
+                            <div className="col-lg-3 col-md-4 col-sm-6 showcase_card">
+                                <img
+                                    decoding="async"
+                                    src={brand.brandPictures}
+                                    className="mb-4 img-fluid"
+                                    style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'contain' }}
+                                />
+                            </div>
+                        </div>
+                    }
                 </div>
             </section>
             {/* Cars in this Brand Start */}
@@ -98,10 +110,11 @@ const CarInBrand = () => {
                             </div>
                         ))
                     ) : (
-                        <div class="d-flex justify-content-center my-5">
-                            <div class="spinner-border" role="status" style={{ color: 'blueviolet' }}>
-                                <span class="visually-hidden"></span>
-                            </div>
+                        <div className="h-100 d-flex align-items-center justify-content-center">
+                            <ColorRing
+                                visible={true}
+                                colors={['#000435', 'rgb(14 165 233)', 'rgb(243 244 246)', '#000435', 'rgb(14 165 233)']}
+                            />
                         </div>
                     )}
                 </div>

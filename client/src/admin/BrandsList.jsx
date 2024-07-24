@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 
 const CreateCategory = () => {
 
-    const [brand, setBrand] = useState([])
+    const [brands, setBrand] = useState([])
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState(null)
     const [updatedName, setUpdatedName] = useState("")
@@ -16,7 +16,7 @@ const CreateCategory = () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getAll-brand`)
             if (data.success) {
-                setBrand(data.brand.reverse())
+                setBrand(data.brands.reverse())
             }
         } catch (err) {
             console.log(err)
@@ -79,10 +79,10 @@ const CreateCategory = () => {
                                     </tr>
                                 </thead>
                                 <tbody className='text-center'>
-                                    {brand?.map(c => (
+                                    {brands?.map(c => (
                                         <tr>
                                             <td>
-                                                <img src={`${process.env.REACT_APP_API_URL}/${c.brandPictures}`} alt={c.name}
+                                                <img src={c.brandPictures} alt={c.name}
                                                     style={{ maxWidth: '100%', maxHeight: '50px', objectFit: 'contain' }}
                                                 />
                                             </td>

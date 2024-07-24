@@ -89,7 +89,8 @@ const Navbar = () => {
                             </Link>
                             <Link to='/cart' style={{ textDecoration: 'none' }}>
                                 <li className="nav-item">
-                                    <a className="nav-link " aria-current="page"><AiOutlineShoppingCart size={25} /> Cart  ({cart?.length})</a>
+                                    <i class="fa"><AiOutlineShoppingCart size={25} color='blueviolet' /></i>
+                                    <span className='badge' style={{ marginLeft: '3px', paddingBottom: '2px', paddingTop: '1px' }} id='lblCartCount'>{cart?.length}</span>
                                 </li>
                             </Link>
                         </ul>

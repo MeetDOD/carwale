@@ -126,7 +126,7 @@ const Cart = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="text-center">
-                                                                <p className="sizePrice"> ₹ {p.price}</p>
+                                                                <p className="sizePrice"> ₹ {p.price} Lakhs</p>
                                                                 <button
                                                                     className="btn btn-danger"
                                                                     onClick={() => { removeCartItem(p._id); notify() }}

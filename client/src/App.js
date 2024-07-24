@@ -56,7 +56,7 @@ function App() {
             <Route path='user/profile' element={<UserProfile/>} />
       </Route>
       </Routes>
-      <Toaster />
+      <Toaster containerStyle={{zIndex:'9999999'}} reverseOrder={true}/>
       <Footer/>
     </Router>
   );
