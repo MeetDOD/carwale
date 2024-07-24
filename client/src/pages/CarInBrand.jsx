@@ -84,12 +84,12 @@ const CarInBrand = () => {
                                             className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
                                             style={{ width: '35px', height: '35px' }}>
                                             <p className="text-white mb-0 small">
-                                                <img src={`${process.env.REACT_APP_API_URL}/${brand.brandPictures}`} alt={brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
+                                                <img src={brand.brandPictures} alt={brand.name} style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }} />
                                             </p>
                                         </div>
                                     </div>
                                     <Link to={`/car/${p.slug}`} className='text-center'>
-                                        <img src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
+                                        <img src={p.productPictures} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
                                     </Link>
                                     <div className="card-body">
                                         <h4 className="text-center mb-4">{p.name}</h4>

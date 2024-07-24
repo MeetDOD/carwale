@@ -43,26 +43,28 @@ const Brandshome = () => {
                             />
                         </div>
                         :
-                        <div className="row justify-content-center">
-                            {brands?.slice(0, 8).map(c => (
-                                <div className="col-lg-3 col-md-4 col-sm-6 mb-4 showcase_card">
-                                    <Link to={`/brand/${c.slug}`}>
-                                        <img
-                                            decoding="async"
-                                            src={c.brandPictures}
-                                            className="mb-4 img-fluid"
-                                            style={{ maxWidth: '100%', maxHeight: '190px', objectFit: 'contain' }}
-                                        />
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
+                        <>
+                            <div className="row justify-content-center">
+                                {brands?.slice(0, 8).map(c => (
+                                    <div className="col-lg-3 col-md-4 col-sm-6 mb-4 showcase_card">
+                                        <Link to={`/brand/${c.slug}`}>
+                                            <img
+                                                decoding="async"
+                                                src={c.brandPictures}
+                                                className="mb-4 img-fluid"
+                                                style={{ maxWidth: '100%', maxHeight: '190px', objectFit: 'contain' }}
+                                            />
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="col-12 text-center">
+                                <Link to='/brands' className='btn btn-lg text-white' style={{ backgroundColor: 'blueviolet' }}>
+                                    View More <FaCarSide size={25} />
+                                </Link>
+                            </div>
+                        </>
                     }
-                    <div className="col-12 text-center">
-                        <Link to='/brands' className='btn btn-lg text-white' style={{ backgroundColor: 'blueviolet' }}>
-                            View More <FaCarSide size={25} />
-                        </Link>
-                    </div>
                 </div>
             </section>
         </div>

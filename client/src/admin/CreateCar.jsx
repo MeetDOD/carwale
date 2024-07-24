@@ -97,7 +97,7 @@ const CreateCar = () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getAll-brand`);
             if (data.success) {
-                setBrands(data?.brand);
+                setBrands(data?.brands);
             }
         } catch (err) {
             console.log(err);

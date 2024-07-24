@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import { Checkbox, Radio } from "antd";
 import axios from 'axios';
 import { Price } from '../pages/Price';
-import { AiOutlineSearch } from 'react-icons/ai'
+import { ColorRing } from 'react-loader-spinner'
 
 const CarsHome = () => {
     const [cars, setcars] = useState([]);
@@ -21,15 +21,18 @@ const CarsHome = () => {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
     const [search, setsearch] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const getAllBrand = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/brand/getAll-brand`)
             if (data.success) {
-                setBrand(data.brand)
+                setBrand(data.brands)
             }
+            setLoading(false);
         } catch (err) {
-            console.log(err)
+            console.log(err);
+            setLoading(true);
         }
     }
 
@@ -40,9 +43,11 @@ const CarsHome = () => {
                 headers: { "Content-type": "application/json" }
             })
             const data_ = await data.json()
-            setcars(data_.car)
+            setcars(data_.cars.reverse())
+            setLoading(false);
         } catch (error) {
             console.log(error);
+            setLoading(true);
         }
     };
 
@@ -123,76 +128,83 @@ const CarsHome = () => {
                             </button>
                         </div>
                     </div>
-
-
                     <div className="col-md-12 col-lg-9">
-                        <div className="row">
-                            {cars.filter((car) => {
-                                return search.toString().toLowerCase() === '' ? car : car.name.toLowerCase().includes(search)
-                            }).filter((car) => selectedBrands.length === 0 || selectedBrands.includes(car.brand._id))
-                                .filter((car) => {
-                                    if (!selectedPriceRange) return true;
-                                    const [minPrice, maxPrice] = selectedPriceRange;
-                                    return car.price >= minPrice && car.price <= maxPrice;
-                                }).map((p) => (
-                                    <div className="col-md-12 col-lg-4 mb-3">
-                                        <div className="card ">
-                                            <div className="d-flex justify-content-between p-3">
-                                                <p className="lead mb-0 respBrand">{p.brand.name}</p>
-                                                <div
-                                                    className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
-                                                    style={{ width: '35px', height: '35px' }}
-                                                >
-                                                    <Link
-                                                        to={`/brand/${p.brand.slug}`}
-                                                        className="text-white mb-0 small"
+                        {loading ?
+                            <div className="h-100 d-flex align-items-center justify-content-center">
+                                <ColorRing
+                                    visible={true}
+                                    colors={['#000435', 'rgb(14 165 233)', 'rgb(243 244 246)', '#000435', 'rgb(14 165 233)']}
+                                />
+                            </div>
+                            :
+                            <div className="row">
+                                {cars.filter((car) => {
+                                    return search.toString().toLowerCase() === '' ? car : car.name.toLowerCase().includes(search)
+                                }).filter((car) => selectedBrands.length === 0 || selectedBrands.includes(car.brand._id))
+                                    .filter((car) => {
+                                        if (!selectedPriceRange) return true;
+                                        const [minPrice, maxPrice] = selectedPriceRange;
+                                        return car.price >= minPrice && car.price <= maxPrice;
+                                    }).map((p) => (
+                                        <div className="col-md-12 col-lg-4 mb-3">
+                                            <div className="card ">
+                                                <div className="d-flex justify-content-between p-3">
+                                                    <p className="lead mb-0 respBrand">{p.brand.name}</p>
+                                                    <div
+                                                        className=" rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
+                                                        style={{ width: '35px', height: '35px' }}
                                                     >
-                                                        <img
-                                                            src={`${process.env.REACT_APP_API_URL}/${p.brand.brandPictures}`}
-                                                            alt={p.brand.name}
-                                                            style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }}
-                                                        />
-                                                    </Link>
+                                                        <Link
+                                                            to={`/brand/${p.brand.slug}`}
+                                                            className="text-white mb-0 small"
+                                                        >
+                                                            <img
+                                                                src={p.brand.brandPictures}
+                                                                alt={p.brand.name}
+                                                                style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain' }}
+                                                            />
+                                                        </Link>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <Link to={`/car/${p.slug}`} className='text-center'>
-                                                <img
-                                                    src={`${process.env.REACT_APP_API_URL}/${p.productPictures[0]}`}
-                                                    alt={p.name}
-                                                    style={{ maxWidth: '100%', maxHeight: '130px', objectFit: 'contain' }}
-                                                    className='border rounded'
-                                                />
-                                            </Link>
-                                            <div className="card-body">
-                                                <h4 className="text-center mb-4 respName">{p.name}</h4>
-                                                <div className="d-flex justify-content-between">
-                                                    <h6 className='respBrand'><PiCurrencyInrFill /> : {p.price} Lakhs</h6>
-                                                    <h6 className='respBrand'><BsFuelPumpFill /> : {p.fuelType}</h6>
-                                                </div>
-                                                <div className="d-flex justify-content-between my-2">
-                                                    <h6 className='respBrand'><TbStars /> : {p.safetyrating}</h6>
-                                                    <h6 className='respBrand'><MdAirlineSeatReclineExtra /> : {p.seater} Seater</h6>
-                                                </div>
-                                                <div className='text-center'>
-                                                    <Link
-                                                        className='btn my-2'
-                                                        style={{ backgroundColor: 'blueviolet', color: 'white' }}
-                                                        to={`/car/${p.slug}`}
-                                                    >
-                                                        <AiOutlineEye size={20} className='pb-1' /> View
-                                                    </Link>
-                                                    <button
-                                                        className='btn btn-outline-primary my-2 mx-3 '
-                                                        onClick={() => { setcart([...cart, p]); localStorage.setItem('cart', JSON.stringify([...cart, p])); notify() }}
-                                                    >
-                                                        <AiOutlineShoppingCart size={20} className='pb-1' /> Add To Cart
-                                                    </button>
+                                                <Link to={`/car/${p.slug}`} className='text-center'>
+                                                    <img
+                                                        src={p.productPictures[0]}
+                                                        alt={p.name}
+                                                        style={{ maxWidth: '100%', maxHeight: '130px', objectFit: 'contain' }}
+                                                        className='border rounded'
+                                                    />
+                                                </Link>
+                                                <div className="card-body">
+                                                    <h4 className="text-center mb-4 respName">{p.name}</h4>
+                                                    <div className="d-flex justify-content-between">
+                                                        <h6 className='respBrand'><PiCurrencyInrFill /> : {p.price} Lakhs</h6>
+                                                        <h6 className='respBrand'><BsFuelPumpFill /> : {p.fuelType}</h6>
+                                                    </div>
+                                                    <div className="d-flex justify-content-between my-2">
+                                                        <h6 className='respBrand'><TbStars /> : {p.safetyrating}</h6>
+                                                        <h6 className='respBrand'><MdAirlineSeatReclineExtra /> : {p.seater} Seater</h6>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <Link
+                                                            className='btn my-2'
+                                                            style={{ backgroundColor: 'blueviolet', color: 'white' }}
+                                                            to={`/car/${p.slug}`}
+                                                        >
+                                                            <AiOutlineEye size={20} className='pb-1' /> View
+                                                        </Link>
+                                                        <button
+                                                            className='btn btn-outline-primary my-2 mx-3 '
+                                                            onClick={() => { setcart([...cart, p]); localStorage.setItem('cart', JSON.stringify([...cart, p])); notify() }}
+                                                        >
+                                                            <AiOutlineShoppingCart size={20} className='pb-1' /> Add To Cart
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                        </div>
+                                    ))}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

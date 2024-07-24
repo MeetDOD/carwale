@@ -75,7 +75,6 @@ const createBrand = async (req, res) => {
 
         const brand = new brandModel({ name, brandPictures: driveResponse.webViewLink, slug: slugify(name) });
         await brand.save();
-        console.log(brand);
         res.status(201).send({
             success: true,
             message: 'Brand Created Successfully',
@@ -134,10 +133,16 @@ const getBrandById = async (req, res) => {
             });
         }
 
-        const fileId = getDriveFileId(brand.brandPictures);
-        if (fileId) {
-            brand.brandPictures = `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0`;
-        }
+        const convertDriveUrl = (url) => {
+            const fileId = getDriveFileId(url);
+            return fileId ? `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0` : url;
+        };
+
+        brand.brandPictures = convertDriveUrl(brand.brandPictures);
+
+        brand.carInvoleInThisBrand.forEach(car => {
+            car.productPictures = car.productPictures.map(picture => convertDriveUrl(picture));
+        });
 
         res.status(200).send({
             success: true,
@@ -152,7 +157,6 @@ const getBrandById = async (req, res) => {
         });
     }
 };
-
 
 const updateBrand = async (req,res) => {
     try{

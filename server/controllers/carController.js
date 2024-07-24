@@ -4,117 +4,100 @@ const orderModel = require("../models/orderModel")
 const fs = require('fs')
 const braintree = require("braintree");
 const dotenv = require('dotenv')
-const path = require('path');
 const brandModel = require("../models/carBrand");
+const multer  = require('multer')
+const path = require('path')
+const { google } = require('googleapis');
 
 dotenv.config()
 
 var gateway = new braintree.BraintreeGateway({
-  environment: braintree.Environment.Sandbox,
-  merchantId: process.env.BRAINTREE_MERCHANT_ID,
-  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
-  privateKey: process.env.BRAINTREE_PRIVATE_KEY
+    environment: braintree.Environment.Sandbox,
+    merchantId: process.env.BRAINTREE_MERCHANT_ID,
+    publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+    privateKey: process.env.BRAINTREE_PRIVATE_KEY
 });
 
-
-const getAllCar = async (req,res) => {
-    try{
-        const car = await carModel.find({}).populate('brand')
-
-        res.status(200).send({
-            success:true,
-            totalCar:car.length,
-            message:"All cars",
-            car
-        })
-    }catch(err){
-        res.status(500).send({
-            success:false,
-            message:"Error in Getting Car",
-            err
-        })
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
     }
-}
+});
+const upload = multer({ storage });
 
-const getCarById = async (req,res) => {
-    try{
-        const car = await carModel.findOne({slug:req.params.slug}).populate('brand')
-        
-        res.status(200).send({
-            success:true,
-            message:"Car By this Id",
-            car
-        })
-    }catch(err){
-        res.status(500).send({
-            success:false,
-            message:"Error in Finding Car Id",
-            err
-        })
-    }
-}
+const KEYFILEPATH = path.join(__dirname, 'cred.json');
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
 
-const getPhotoById = async (req,res) => {
-    try{
-        const car = await carModel.findById(req.params.pid).populate('brand').select('productPictures')
+const auth = new google.auth.GoogleAuth({
+    keyFile: KEYFILEPATH,
+    scopes: SCOPES,
+});
 
-        if(car.productPictures.data){
-            res.set('Content-type',car.productPictures.contentType)
-            res.status(200).send(car.productPictures.data)
-        }
-    }catch(err){
-        res.status(500).send({
-            success:false,
-            message:"Error in Finding Photo Car Id",
-            err
-        })
-    }
-}
+const drive = google.drive({ version: 'v3', auth });
+
+const FOLDER_ID = "1LbbwJK78fjf_ZWYc1HZF5SwwU6reXomQ"; 
+
+const uploadFileToGoogleDrive = async (filePath, fileName) => {
+    const fileMetadata = {
+        name: fileName,
+        parents: [FOLDER_ID], 
+    };
+    const media = {
+        mimeType: 'image/jpeg', 
+        body: fs.createReadStream(filePath),
+    };
+    const response = await drive.files.create({
+        resource: fileMetadata,
+        media: media,
+        fields: 'webViewLink',
+    });
+    return response.data;
+};
+
 const createCar = async (req, res) => {
     try {
-        const { name, description, brand,price,fuelType,transmission,engineSize,mileage,safetyrating,warranty,seater,size,fuelTank } = req.body;
-        
-        switch(true){
-            case !name: res.status(500).send({success: false,message: "Name is Required",});
-            case !description: res.status(500).send({success: false,message: "description is Required",});
-            case !brand: res.status(500).send({success: false,message: "brand is Required",});
-            case !price: res.status(500).send({success: false,message: "price is Required",});
-            case !fuelType: res.status(500).send({success: false,message: "fuelType is Required",});
-            case !transmission: res.status(500).send({success: false,message: "transmission is Required",});
-            case !engineSize: res.status(500).send({success: false,message: "engineSize is Required",});
-            case !mileage: res.status(500).send({success: false,message: "mileage is Required",});
-            case !safetyrating: res.status(500).send({success: false,message: "safetyrating is Required",});
-            case !warranty: res.status(500).send({success: false,message: "warranty is Required",});
-            case !seater: res.status(500).send({success: false,message: "seater is Required",});
-            case !size: res.status(500).send({success: false,message: "size is Required",});
-            case !fuelTank: res.status(500).send({success: false,message: "fuelTank is Required",});
+        const { name, description, brand, price, fuelType, transmission, engineSize, mileage, safetyrating, warranty, seater, size, fuelTank } = req.body;
+
+        const requiredFields = ['name', 'description', 'brand', 'price', 'fuelType', 'transmission', 'engineSize', 'mileage', 'safetyrating', 'warranty', 'seater', 'size', 'fuelTank'];
+        for (let field of requiredFields) {
+            if (!req.body[field]) {
+                return res.status(400).send({ success: false, message: `${field} is Required` });
+            }
         }
-        const productPictures = req.files.map(file => file.path.replace('uploads/', ''));
+
+        const uploadedFiles = await Promise.all(req.files.map(async (file) => {
+            const result = await uploadFileToGoogleDrive(file.path, file.filename);
+            return result.webViewLink;
+        }));
+
         const slug = slugify(name);
 
         const car = new carModel({
-            name: name,
-            slug: slug,
-            description: description,
-            brand: brand,
-            productPictures: productPictures,
-            price:price,
-            fuelType:fuelType,
-            transmission:transmission,
-            engineSize:engineSize,
-            mileage:mileage,
-            safetyrating:safetyrating,
-            warranty:warranty,
-            seater:seater,
-            size:size,
-            fuelTank:fuelTank
+            name,
+            slug,
+            description,
+            brand,
+            productPictures: uploadedFiles,
+            price,
+            fuelType,
+            transmission,
+            engineSize,
+            mileage,
+            safetyrating,
+            warranty,
+            seater,
+            size,
+            fuelTank
         });
 
         await car.save();
 
-        const category = await brandModel.findById({_id : brand});
-        await category.carInvoleInThisBrand.push(car);
-        category.save();
+        const category = await brandModel.findById(brand);
+        category.carInvoleInThisBrand.push(car);
+        await category.save();
 
         res.status(201).send({
             success: true,
@@ -126,12 +109,79 @@ const createCar = async (req, res) => {
         res.status(500).send({
             success: false,
             message: "Error in creating Car",
-            error: err.message // Provide a more detailed error message
+            error: err.message
         });
     }
 };
-    
 
+const getDriveFileId = (url) => {
+    const regex = /\/d\/([a-zA-Z0-9_-]+)\//;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+};
+
+const getAllCar = async (req, res) => {
+    try {
+        const cars = await carModel.find({}).populate('brand');
+
+        const updatedCars = cars.map(car => {
+            car.productPictures = car.productPictures.map(picture => {
+                const fileId = getDriveFileId(picture);
+                return fileId ? `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0` : picture;
+            });
+
+            if (car.brand && car.brand.brandPictures) {
+                const fileId = getDriveFileId(car.brand.brandPictures);
+                car.brand.brandPictures = fileId ? `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0` : car.brand.brandPictures;
+            }
+
+            return car;
+        });
+
+        res.status(200).send({
+            success: true,
+            totalCar: updatedCars.length,
+            message: "All cars",
+            cars: updatedCars
+        });
+    } catch (err) {
+        res.status(500).send({
+            success: false,
+            message: "Error in Getting Car",
+            error: err.message
+        });
+    }
+};
+
+const getCarById = async (req, res) => {
+    try {
+        const car = await carModel.findOne({ slug: req.params.slug }).populate('brand');
+
+        if (car) {
+            car.productPictures = car.productPictures.map(picture => {
+                const fileId = getDriveFileId(picture);
+                return fileId ? `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0` : picture;
+            });
+
+            if (car.brand && car.brand.brandPictures) {
+                const fileId = getDriveFileId(car.brand.brandPictures);
+                car.brand.brandPictures = fileId ? `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0` : car.brand.brandPictures;
+            }
+        }
+
+        res.status(200).send({
+            success: true,
+            message: "Car By this Id",
+            car
+        });
+    } catch (err) {
+        res.status(500).send({
+            success: false,
+            message: "Error in Finding Car Id",
+            err
+        });
+    }
+}
 
 const deleteCar = async (req,res) => {
     try{
@@ -143,9 +193,6 @@ const deleteCar = async (req,res) => {
                         throw err;
                     }
                 })
-            
-
-                
             }
         }catch(e){
             console.log("Delte: " +e)
@@ -155,7 +202,6 @@ const deleteCar = async (req,res) => {
             success:true,
             message:"Car Deleted Successfully"
         });
-
     }catch(err){
         res.status(500).send({
             success:false,
@@ -182,7 +228,6 @@ const updatecar = async (req,res) => {
             case !seater : return res.send({message:"Seater is required"})
             case !size : return res.send({message:"Size is required"})
             case !fuelTank : return res.send({message:"Fuel Tank is required"})
-            // case !brand : return res.status(500).send({message:"Brand is required"})
         }
 
         const car = await carModel.findByIdAndUpdate(req.params.pid,{...req.fields,slug:slugify(name)},{new:true})
@@ -272,4 +317,4 @@ const brainTreePaymentController = async (req,res) => {
       }
 }
 
-module.exports = {createCar,getAllCar,getCarById,getPhotoById,deleteCar,updatecar,relatedCar,braintreeTokenController,brainTreePaymentController}
+module.exports = {upload,createCar,getAllCar,getCarById,deleteCar,updatecar,relatedCar,braintreeTokenController,brainTreePaymentController}
