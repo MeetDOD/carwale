@@ -168,7 +168,7 @@ const CarsHome = () => {
                                                 </div>
                                                 <Link to={`/car/${p.slug}`} className='text-center'>
                                                     <img
-                                                        src={p.productPictures[0]}
+                                                        src={p.productPictures[4]}
                                                         alt={p.name}
                                                         style={{ maxWidth: '100%', maxHeight: '130px', objectFit: 'contain' }}
                                                         className='border rounded'

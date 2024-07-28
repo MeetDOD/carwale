@@ -89,7 +89,7 @@ const CarInBrand = () => {
                                         </div>
                                     </div>
                                     <Link to={`/car/${p.slug}`} className='text-center'>
-                                        <img src={p.productPictures} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
+                                        <img src={p.productPictures[4]} alt={p.name} style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }} className='border rounded' />
                                     </Link>
                                     <div className="card-body">
                                         <h4 className="text-center mb-4">{p.name}</h4>

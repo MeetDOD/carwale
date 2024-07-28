@@ -248,25 +248,37 @@ const updatecar = async (req,res) => {
     }
 }
 
-const relatedCar = async (req,res) => {
-    try{
-        const {cid,bid} = req.params
+const relatedCar = async (req, res) => {
+    try {
+        const { cid, bid } = req.params;
         const cars = await carModel.find({
-            brand:bid,
-            _id:{$ne:cid}
-        }).populate('brand')
+            brand: bid,
+            _id: { $ne: cid }
+        }).populate('brand');
+
+        cars.forEach(car => {
+            car.productPictures = car.productPictures.map(picture => {
+                const fileId = getDriveFileId(picture);
+                return fileId ? `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0` : picture;
+            });
+
+            if (car.brand && car.brand.brandPictures) {
+                const fileId = getDriveFileId(car.brand.brandPictures);
+                car.brand.brandPictures = fileId ? `https://lh3.googleusercontent.com/d/${fileId}=w1000?authuser=0` : car.brand.brandPictures;
+            }
+        });
 
         res.status(200).send({
-            success:true,
-            message:'Related Cars for this Brands',
+            success: true,
+            message: 'Related Cars for this Brand',
             cars
-        })
-    }catch(err){
+        });
+    } catch (err) {
         res.status(400).send({
-            success:false,
-            message:"Error While Fetching Related Car",
+            success: false,
+            message: "Error While Fetching Related Cars",
             err
-        })
+        });
     }
 }
 
