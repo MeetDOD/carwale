@@ -1,36 +1,38 @@
-# TECHCARE: Doctor Online Appointment Booking Platform
+# Carwale: Full-Stack Car Buying Web App
 
-**TECHCARE** is an online platform that allows users to book appointments with their favorite doctors in various specialist fields. The platform integrates **Google Calendar, Google Meet, and Stripe Payment Gateway** to provide a seamless user experience. The web app is built using the **M.E.R.N Stack** and deployed on **Render**.
+**Carwale** is a comprehensive car buying platform built using the MERN stack, comprising **Node.js**, **React.js**, **MongoDB**, and **Express.js**. The application is designed to provide **users** with an effortless and **enjoyable experience** while browsing and purchasing cars from a vast collection of vehicles.
 
 ## Key Features:
-1. **Doctor Selection**: Browse and choose doctors based on specialization.
-2. **Appointment Booking**: Book appointments with real-time availability.
-3. **Google Calendar Integration**: Automatically adds the booked appointment to the user's Google Calendar.
-4. **Google Meet Integration**: Virtual appointments are facilitated through Google Meet.
-5. **Stripe Payment Gateway**: Secure payment handling for appointment fees.
-6. **Responsive Design**: Accessible across all devices with a user-friendly interface.
+1. **BrainTree Payment Gateway Integration**: Secure and seamless payment processing, allowing customers to purchase vehicles with confidence.
+2. **360-Degree Visualization**: An immersive feature that offers users a complete 360-degree view of the cars, helping them make informed decisions.
+3. **Car Image Gallery** : A dynamic and responsive gallery showcasing high-quality images of each car, providing a detailed look at every aspect of the vehicles.
+4. **Advanced Search and Filtering**: Users can easily find their desired car using various filters, including price range, brand, and other essential criteria.
+5. **Filter by Price and Brands**: Simplified browsing with options to filter cars based on budget and preferred brands, making the search process more intuitive.
+6. **Admin Panel**: A dedicated admin interface for managing car listings, orders, user accounts, and other critical operations, ensuring smooth administration of the platform.
 
 ## Technology Stack:
-1. **Frontend**: Vite, ReactJS, Tailwind CSS, Shadcn UI, Recoil for state management.
-2. **Backend**: Node.js, Expressjs, Stripe.
-5. **API**: Gemini AI, Rapid API, Google Translator API, Google Meet, Google Calender API.
-3. **Database**: MongoDB.
-4. **Deployment**: Render.
+1. **Frontend**: React.js for building a responsive and user-friendly interface with Bootstrap.
+2. **Backend**: Node.js and Express.js for a robust and scalable server-side architecture.
+3. **Database**: MongoDB, utilizing the Mongoose library for efficient data management and retrieval.
 
 ## Deployment Details:
 1. **Frontend**: Deployed on [Render.com](https://render.com/) for a reliable and scalable hosting solution.
 2. **Backend**: Deployed on [Render.app](https://render.com/) ensuring a stable and efficient server environment.
-3. **Database**: Deployed on [MongoDB Cloud](https://www.mongodb.com/cloud), offering a fully managed database service with high availability and performance.
+3. **Images**: Hosted on Google Drive, leveraging the Google Drive API for secure and accessible image storage and retrieval.
+4. **Database**: Deployed on [MongoDB Cloud](https://www.mongodb.com/cloud), offering a fully managed database service with high availability and performance.
 
-## **Live Link :- https://techcare-62ma.onrender.com**
+## **Live Link :- https://carwale.onrender.com**
 
 **Screenshots**:
 
-![image](https://github.com/user-attachments/assets/52a01d6e-4754-45a0-8358-084a34915aff)
+![image](https://github.com/user-attachments/assets/e4a05b99-ffc6-4466-a06d-ed5264f4572a)
 
-![image](https://github.com/user-attachments/assets/fabde024-7144-4aae-9d5d-1f36d92b136d)
+![image](https://github.com/user-attachments/assets/4a054998-517b-4a88-bf3a-079a992db305)
 
-![image](https://github.com/user-attachments/assets/1df84378-f414-40eb-b407-629639ac12af)
+![image](https://github.com/user-attachments/assets/572dace8-e246-4b66-baef-d870bc9b53ab)
 
+![image](https://github.com/user-attachments/assets/bd812622-18dd-4027-8a34-d13c948c0640)
+
+![image](https://github.com/user-attachments/assets/f0a36f8e-c165-4d3e-a48f-616b30454d2b)
 
 ## **Please Give it a ⭐ Star if you like it...**
